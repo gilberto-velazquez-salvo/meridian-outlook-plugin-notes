@@ -14,7 +14,18 @@ Office.onReady((info) => {
 });
 
 export async function run() {
-  /**
-   * Insert your Outlook code here
-   */
+  // Get a reference to the current message
+  const item = Office.context.mailbox.item;
+  let config;
+  let tokenFromUser;
+  config = getConfig();
+  tokenFromUser = await recentlyVisitedCases(config.applicationUserName, config.applicationPassName);
+
+  // Write message property value to the task pane
+  console.log("item element");
+  //console.log(item);
+  document.getElementById("item-subject").innerHTML = "<b>Subject:</b> <br/>" + item.subject;
+  console.log(config.applicationUserName);
+  console.log(tokenFromUser);
+  //Get the active cases with the id's  
 }

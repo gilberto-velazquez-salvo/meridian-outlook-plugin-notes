@@ -20,6 +20,7 @@ module.exports = async (env, options) => {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
       taskpane: "./src/taskpane/taskpane.js",
       commands: "./src/commands/commands.js",
+      config: "./src/helpers/addin-config.js",
     },
     output: {
       clean: true,

@@ -2,15 +2,15 @@
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" xsi:type="MailApp">
   <Id>ad48531b-e3ed-4e02-82bf-a42d1a44f51e</Id>
   <Version>1.0.0.0</Version>
-  <ProviderName>Contoso</ProviderName>
+  <ProviderName>Meridian</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Meridian-notes-crm"/>
-  <Description DefaultValue="A template to get started."/>
+  <Description DefaultValue="Add in to send notes to Meridian CRM."/>
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-128.png"/>
-  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
+  <SupportUrl DefaultValue="https://portal.meridianmedlegal.com/help"/>
   <AppDomains>
-    <AppDomain>https://www.contoso.com</AppDomain>
+    <AppDomain>https://portal.meridianmedlegal.com/</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Mailbox"/>
@@ -40,7 +40,7 @@
       </bt:Sets>
     </Requirements>
     <Hosts>
-      <Host xsi:type="MailHost">
+    <Host xsi:type="MailHost">          
         <DesktopFormFactor>
           <FunctionFile resid="Commands.Url"/>
           <ExtensionPoint xsi:type="MessageReadCommandSurface">
@@ -62,6 +62,7 @@
                     <SourceLocation resid="Taskpane.Url"/>
                   </Action>
                 </Control>
+                <!--
                 <Control xsi:type="Button" id="ActionButton">
                   <Label resid="ActionButton.Label"/>
                   <Supertip>
@@ -77,9 +78,50 @@
                     <FunctionName>action</FunctionName>
                   </Action>
                 </Control>
+                -->
               </Group>
             </OfficeTab>
           </ExtensionPoint>
+          <!-- Message Compose
+          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgComposeCmdGroup">
+                <Label resid="GroupLabel"/>
+                <Control xsi:type="Button" id="msgComposeInsertGist">
+                  <Label resid="TaskpaneButton.Label"/>
+                  <Supertip>
+                    <Title resid="TaskpaneButton.Title"/>
+                    <Description resid="TaskpaneButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+                
+                <Control xsi:type="Button" id="msgComposeInsertDefaultGist">
+                  <Label resid="FunctionButton.Label"/>
+                  <Supertip>
+                    <Title resid="FunctionButton.Title"/>
+                    <Description resid="FunctionButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>insertDefaultGist</FunctionName>
+                  </Action>
+                </Control>                
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint> 
+          -->
         </DesktopFormFactor>
       </Host>
     </Hosts>
@@ -96,11 +138,15 @@
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Contoso Add-in"/>
         <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
-        <bt:String id="ActionButton.Label" DefaultValue="Perform an action"/>
+        <bt:String id="TaskpaneButton.Title" DefaultValue="Insert gist"/>
+        <!--<bt:String id="ActionButton.Label" DefaultValue="Perform an action"/>-->
+        <bt:String id="FunctionButton.Label" DefaultValue="Insert default gist"/>
+        <bt:String id="FunctionButton.Title" DefaultValue="Insert default gist"/>
       </bt:ShortStrings>
       <bt:LongStrings>
         <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/>
-        <bt:String id="ActionButton.Tooltip" DefaultValue="Perform an action when clicked."/>
+        <!--<bt:String id="ActionButton.Tooltip" DefaultValue="Perform an action when clicked."/>-->
+        <bt:String id="FunctionButton.Tooltip" DefaultValue="Inserts the content of the gist you mark as default into the current message."/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

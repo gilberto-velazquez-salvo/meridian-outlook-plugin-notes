@@ -1,0 +1,1 @@
+function getConfig(){return{applicationUserName:"devteam@mailinator.com",applicationPassName:"I9ty5tS2"}}
