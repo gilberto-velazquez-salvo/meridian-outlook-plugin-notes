@@ -10,6 +10,7 @@ Office.onReady((info) => {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("run").onclick = run;
+    document.getElementById("cases").onclick = cases;
   }
 });
 
@@ -28,4 +29,19 @@ export async function run() {
   console.log(config.applicationUserName);
   console.log(tokenFromUser);
   //Get the active cases with the id's  
+}
+
+
+export async function cases() {
+  // Get a reference to the current message
+  const item = Office.context.mailbox.item;
+  let config;
+  config = getConfig();
+  await recentlyVisitedCases(config.applicationUserName, config.applicationPassName);
+
+  // Write message property value to the task pane
+  //console.log("item element");
+  //console.log(item);
+  //document.getElementById("cases-list").innerHTML = "<b>Subject:</b> <br/>" + item.subject;
+  //console.log(config.applicationUserName);
 }

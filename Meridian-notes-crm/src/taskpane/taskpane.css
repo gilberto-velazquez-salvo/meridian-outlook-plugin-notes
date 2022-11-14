@@ -18,8 +18,10 @@
  
  .ms-welcome__header {
     padding: 20px;
+    /*
     padding-bottom: 30px;
-    padding-top: 100px;
+    padding-top: 20px;
+    */
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
@@ -77,4 +79,18 @@
 
 b {
     font-weight: bold;
+}
+
+.ms-font-su {
+    font-size: 25px;
+}
+/* Style for table for case list */
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+th, td{
+    padding: 10px 20px;
+    border: 1px solid #000000;
+    color: #9b1b1b;
 }
