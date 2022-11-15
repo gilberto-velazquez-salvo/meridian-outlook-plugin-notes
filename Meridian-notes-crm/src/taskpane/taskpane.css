@@ -94,3 +94,12 @@ th, td{
     border: 1px solid #000000;
     color: #9b1b1b;
 }
+label {
+    display: block;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}

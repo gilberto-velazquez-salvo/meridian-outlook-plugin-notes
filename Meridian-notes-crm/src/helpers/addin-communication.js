@@ -58,7 +58,7 @@ async function recentlyVisitedCases(user, pass) {
     var remoteCode = await makeTokenRequest("https://stage-api.meridianmedlegal.com/api/v1/login", user, pass);
     const dataParsed = JSON.parse(remoteCode);
     console.log(dataParsed);
-    console.log(dataParsed.data.token);
+    console.log(dataParsed.data?.token);
     var infoFromDashboard = await getDashboardInfo(dataParsed.data.token);
     console.log(infoFromDashboard);
     console.log("infoFromDashboard");
@@ -90,6 +90,77 @@ async function getToken(user, pass) {
   } catch (error) {
     console.log("Error fetching remote HTML: ", error);
   }
+}
+
+async function saveNoteCRM(user, pass, fcaseidObtained, fsubjectObtained, fnoteObtained) {
+  try {
+    console.log("saveNote");
+    console.log(user);
+    console.log(pass);
+    console.log(fcaseidObtained);
+    console.log(fsubjectObtained);
+    console.log(fnoteObtained);
+    var remoteCodeCRM = await makeTokenRequest("https://stage-api.meridianmedlegal.com/api/v1/login", user, pass);
+    const dataParsed3 = JSON.parse(remoteCodeCRM);
+    console.log(dataParsed3.data.token);
+
+    var infoFromNotes = await makeStoreRequest(
+      dataParsed3.data.token,
+      fcaseidObtained,
+      fsubjectObtained,
+      fnoteObtained
+    );
+    console.log(infoFromNotes);
+    console.log("infoFromDashboard");
+  } catch (error) {
+    console.log("Error getting the cases: ", error);
+    alert("hubo un pex");
+  }
+
+  /*
+  try {
+    console.log("saveNote");
+    var remoteCode = await makeTokenRequest("https://stage-api.meridianmedlegal.com/api/v1/login", user, pass);
+    const dataParsed = JSON.parse(remoteCode);
+    console.log(dataParsed.data.token);
+    var infoFromDashboard = await makeStoreRequest(
+      dataParsed.data.token,
+      fcaseidObtained,
+      fsubjectObtained,
+      fnoteObtained
+    );
+    console.log(infoFromDashboard);
+    console.log("infoFromDashboard");
+  } catch (error) {
+    console.log("Error getting the cases: ", error);
+  }*/
+}
+
+function makeStoreRequest(token, fcaseidObtained, fsubjectObtained, fnoteObtained) {
+  var url_complete = "https://stage-api.meridianmedlegal.com/api/v1/case/" + fcaseidObtained + "/note/store";
+  return new Promise(function (resolve, reject) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url_complete);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Authorization", "Bearer " + token);
+    xhr.onload = function () {
+      if (this.status >= 200 && this.status < 300) {
+        resolve(xhr.response);
+      } else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText,
+        });
+      }
+    };
+    xhr.onerror = function () {
+      reject({
+        status: this.status,
+        statusText: xhr.errors,
+      });
+    };
+    xhr.send(JSON.stringify({ description: fnoteObtained, subject: fsubjectObtained, pinned: true }));
+  });
 }
 
 function makeTokenRequest(url, user, pass) {
@@ -161,16 +232,22 @@ function buildCasesHtml(recentlyVisitedCases) {
   row_1.appendChild(heading_2);
   row_1.appendChild(heading_3);
   thead.appendChild(row_1);
-
+  console.log('before create table');
   for (var x = 0; x < recentlyVisitedCases.length; x++) {
     // Creating and adding data to second row of the table
+    console.log('inside for x: '+x);
+    console.log(recentlyVisitedCases[x]);
     let row_2 = document.createElement("tr");
     let row_2_data_1 = document.createElement("td");
-    row_2_data_1.innerHTML = recentlyVisitedCases[x].id;
+    row_2_data_1.innerHTML = recentlyVisitedCases[x].case_id ? recentlyVisitedCases[x].case_id : "--";
     let row_2_data_2 = document.createElement("td");
-    row_2_data_2.innerHTML = recentlyVisitedCases[x].cases.claim_number;
+    row_2_data_2.innerHTML = recentlyVisitedCases[x].cases?.claim_number
+      ? recentlyVisitedCases[x].cases.claim_number
+      : "--";
     let row_2_data_3 = document.createElement("td");
-    row_2_data_3.innerHTML = recentlyVisitedCases[x].cases.claimant_full_name;
+    row_2_data_3.innerHTML = recentlyVisitedCases[x].cases?.claimant_full_name
+      ? recentlyVisitedCases[x].cases.claimant_full_name
+      : "--";
 
     row_2.appendChild(row_2_data_1);
     row_2.appendChild(row_2_data_2);
