@@ -21,6 +21,7 @@ module.exports = async (env, options) => {
       taskpane: "./src/taskpane/taskpane.js",
       commands: "./src/commands/commands.js",
       config: "./src/helpers/addin-config.js",
+      dialog: "./src/settings/dialog.js",
     },
     output: {
       clean: true,
@@ -63,6 +64,14 @@ module.exports = async (env, options) => {
       new CopyWebpackPlugin({
         patterns: [
           {
+            from: "./src/taskpane/taskpane.css",
+            to: "taskpane.css",
+          },
+          {
+            from: "./src/settings/dialog.css",
+            to: "dialog.css",
+          },
+          {
             from: "assets/*",
             to: "assets/[name][ext][query]",
           },
@@ -83,6 +92,11 @@ module.exports = async (env, options) => {
         filename: "commands.html",
         template: "./src/commands/commands.html",
         chunks: ["polyfill", "commands"],
+      }),
+      new HtmlWebpackPlugin({
+        filename: "dialog.html",
+        template: "./src/settings/dialog.html",
+        chunks: ["polyfill", "dialog"],
       }),
     ],
     devServer: {

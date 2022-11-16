@@ -62,6 +62,21 @@
                     <SourceLocation resid="Taskpane.Url"/>
                   </Action>
                 </Control>
+                <Control xsi:type="Button" id="msgReadOpenInsertDefaultGist">
+                  <Label resid="FunctionButton.Label"/>
+                  <Supertip>
+                    <Title resid="FunctionButton.Title"/>
+                    <Description resid="FunctionButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>insertCredentials</FunctionName>
+                  </Action>
+                </Control> 
                 <!--
                 <Control xsi:type="Button" id="ActionButton">
                   <Label resid="ActionButton.Label"/>
@@ -82,7 +97,7 @@
               </Group>
             </OfficeTab>
           </ExtensionPoint>
-          <!-- Message Compose
+          
           <ExtensionPoint xsi:type="MessageComposeCommandSurface">
             <OfficeTab id="TabDefault">
               <Group id="msgComposeCmdGroup">
@@ -115,13 +130,13 @@
                     <bt:Image size="80" resid="Icon.80x80"/>
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
-                    <FunctionName>insertDefaultGist</FunctionName>
+                    <FunctionName>insertCredentials</FunctionName>
                   </Action>
                 </Control>                
               </Group>
             </OfficeTab>
           </ExtensionPoint> 
-          -->
+          
         </DesktopFormFactor>
       </Host>
     </Hosts>
@@ -136,17 +151,17 @@
         <bt:Url id="Taskpane.Url" DefaultValue="https://www.contoso.com/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="GroupLabel" DefaultValue="Contoso Add-in"/>
+        <bt:String id="GroupLabel" DefaultValue="Meridian Add-in"/>
         <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
         <bt:String id="TaskpaneButton.Title" DefaultValue="Insert gist"/>
         <!--<bt:String id="ActionButton.Label" DefaultValue="Perform an action"/>-->
-        <bt:String id="FunctionButton.Label" DefaultValue="Insert default gist"/>
-        <bt:String id="FunctionButton.Title" DefaultValue="Insert default gist"/>
+        <bt:String id="FunctionButton.Label" DefaultValue="Provide CRM Credentials"/>
+        <bt:String id="FunctionButton.Title" DefaultValue="Provide CRM credentials"/>
       </bt:ShortStrings>
       <bt:LongStrings>
         <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/>
         <!--<bt:String id="ActionButton.Tooltip" DefaultValue="Perform an action when clicked."/>-->
-        <bt:String id="FunctionButton.Tooltip" DefaultValue="Inserts the content of the gist you mark as default into the current message."/>
+        <bt:String id="FunctionButton.Tooltip" DefaultValue="Send the information in the email to the Meridian CRM."/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
