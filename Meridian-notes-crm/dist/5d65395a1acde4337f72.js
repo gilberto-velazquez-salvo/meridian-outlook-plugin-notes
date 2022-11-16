@@ -1,0 +1,1 @@
+function getConfig(){return{applicationUserName:"devteam@mailinator.com",applicationPassName:"I9ty5tS2"}}function setConfig(t,a){Office.context.roamingSettings.set("applicationUserName",t.applicationUserName),Office.context.roamingSettings.set("applicationPassName",t.applicationPassName),Office.context.roamingSettings.saveAsync(a)}

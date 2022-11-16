@@ -15,6 +15,7 @@
           const user = getParameterByName("gitHubUserName");
           const gistId = getParameterByName("defaultGistId");
 
+          /* 
           $("#github-user").val(user);
           loadGists(user, function (success) {
             if (success) {
@@ -27,12 +28,13 @@
                 .attr("checked", "checked");
               $("#settings-done").removeAttr("disabled");
             }
-          });
+          });*/
         }
       }
 
       // When the GitHub username changes,
       // try to load gists.
+      /*
       $("#github-user").on("change", function () {
         $("#gist-list").empty();
         const ghUser = $("#github-user").val();
@@ -40,6 +42,7 @@
           loadGists(ghUser);
         }
       });
+      */
 
       // When the Done button is selected, send the
       // values back to the caller as a serialized
@@ -66,6 +69,9 @@
         $("#gist-list").empty();
         const ghUser = $("#github-user").val();
         const ghPass = $("#github-pass").val();
+        console.log('inside click of credentials');
+        console.log(ghUser);
+        console.log(ghPass);
         if (ghUser.length > 0) {
           loadCredentials(ghUser, ghPass);
         }
@@ -100,7 +106,13 @@
     });
   }
 
-  function loadCredentials(user, pass, callback) {
+  async function loadCredentials(user, pass, callback) {
+    var remoteCode = await makeTokenRequest("https://stage-api.meridianmedlegal.com/api/v1/login", user, pass);
+    const dataParsed = JSON.parse(remoteCode);
+    console.log(dataParsed);
+    console.log(dataParsed.data?.token); 
+
+    /*
     getTokenGlobal(user, pass, function (user, pass, error) {
       if (error) {
         $(".gist-list-container").hide();
@@ -117,6 +129,7 @@
         if (callback) callback(true);
       }
     });
+    */
   }
 
   function onGistSelected() {

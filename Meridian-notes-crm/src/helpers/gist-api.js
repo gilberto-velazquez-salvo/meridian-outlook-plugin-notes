@@ -77,13 +77,16 @@ function getGist(gistId, callback) {
 
 function getTokenGlobal(user, pass, callback) {
   const requestUrl = "https://stage-api.meridianmedlegal.com/api/v1/login";
-
+  const json = {
+    email: user,
+    password: pass
+  }
   console.log("inside token global");
   $.ajax({
     type: "POST",
     url: requestUrl,
     dataType: "json",
-    data: { email: user, password: pass },
+    data: json,
   })
     .done(function (gist) {
       console.log(gist);
