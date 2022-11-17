@@ -61,43 +61,11 @@
                   <Action xsi:type="ShowTaskpane">
                     <SourceLocation resid="Taskpane.Url"/>
                   </Action>
-                </Control>
-                <Control xsi:type="Button" id="msgReadOpenInsertDefaultGist">
-                  <Label resid="FunctionButton.Label"/>
-                  <Supertip>
-                    <Title resid="FunctionButton.Title"/>
-                    <Description resid="FunctionButton.Tooltip"/>
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>insertCredentials</FunctionName>
-                  </Action>
-                </Control> 
-                <!--
-                <Control xsi:type="Button" id="ActionButton">
-                  <Label resid="ActionButton.Label"/>
-                  <Supertip>
-                    <Title resid="ActionButton.Label"/>
-                    <Description resid="ActionButton.Tooltip"/>
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>action</FunctionName>
-                  </Action>
-                </Control>
-                -->
+                </Control>                
               </Group>
             </OfficeTab>
           </ExtensionPoint>
-          
+          <!-- disable the pane in the composer (crate new email)
           <ExtensionPoint xsi:type="MessageComposeCommandSurface">
             <OfficeTab id="TabDefault">
               <Group id="msgComposeCmdGroup">
@@ -117,26 +85,10 @@
                     <SourceLocation resid="Taskpane.Url"/>
                   </Action>
                 </Control>
-                
-                <Control xsi:type="Button" id="msgComposeInsertDefaultGist">
-                  <Label resid="FunctionButton.Label"/>
-                  <Supertip>
-                    <Title resid="FunctionButton.Title"/>
-                    <Description resid="FunctionButton.Tooltip"/>
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>insertCredentials</FunctionName>
-                  </Action>
-                </Control>                
               </Group>
             </OfficeTab>
           </ExtensionPoint> 
-          
+          -->
         </DesktopFormFactor>
       </Host>
     </Hosts>
@@ -152,7 +104,7 @@
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Meridian Add-in"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Send note"/>
         <bt:String id="TaskpaneButton.Title" DefaultValue="Insert gist"/>
         <!--<bt:String id="ActionButton.Label" DefaultValue="Perform an action"/>-->
         <bt:String id="FunctionButton.Label" DefaultValue="Provide CRM Credentials"/>

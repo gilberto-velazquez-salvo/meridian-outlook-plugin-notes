@@ -22,6 +22,7 @@ module.exports = async (env, options) => {
       commands: "./src/commands/commands.js",
       config: "./src/helpers/addin-config.js",
       dialog: "./src/settings/dialog.js",
+      displayer: "./src/settings/displayer.js",
     },
     output: {
       clean: true,

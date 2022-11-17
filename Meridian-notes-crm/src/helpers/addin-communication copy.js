@@ -1,3 +1,57 @@
+function getWorkingCases(user, pass) {
+  const requestUrl = "https://stage-api.meridianmedlegal.com/api/v1/login";
+  /* CORS error
+    const requestUrl = "https://stage-api.meridianmedlegal.com/api/v1/login";
+    const response = fetch(requestUrl, {
+      method: "POST",
+      body: {
+        email: user,
+        password: pass,
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const myJson = response.json();
+    console.log(myJson);
+
+    return true;
+  */
+  var tokenObtained;
+  let result = makeRequest("POST", requestUrl, user, pass);
+  console.log("httpRequest-Response");
+  console.log(result);
+  tokenObtained = result;
+  return tokenObtained;
+  /*
+
+
+  const httpRequest = new XMLHttpRequest();
+
+
+  httpRequest.open("POST", "https://stage-api.meridianmedlegal.com/api/v1/login", true);
+  httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  httpRequest.onreadystatechange = () => {
+    // Call a function when the state changes.
+    if (httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200) {
+      // Request finished. Do processing here.
+      console.log("httpRequest");
+      console.log(httpRequest);
+      console.log("httpRequestParsed");
+
+      console.log(JSON.parse(httpRequest.response));
+      const parsedResponse = JSON.parse(httpRequest.response);
+      tokenObtained = parsedResponse.data.token;
+      console.log('tokenObtained');
+      console.log(tokenObtained);
+      return tokenObtained;
+    }
+  };
+  httpRequest.send("email=" + user + "&password=" + pass);
+
+  */
+}
+
 async function recentlyVisitedCases(user, pass) {
   try {
     console.log("recentlyVisitedCases");
@@ -31,12 +85,10 @@ async function getToken(user, pass) {
     //console.log("remoteCode");
     const dataParsed = JSON.parse(remoteCode);
     //console.log("dataParsed");
-    console.log(dataParsed);
-    console.log(dataParsed.data.token);
-    return dataParsed.data.token;
+    //console.log(dataParsed);
+    //console.log(dataParsed.data.token);
   } catch (error) {
     console.log("Error fetching remote HTML: ", error);
-    return null;
   }
 }
 
