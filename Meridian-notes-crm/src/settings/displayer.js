@@ -12,6 +12,8 @@ function display_error(error_message) {
   element.innerHTML = "";
   element.appendChild(message);
   document.getElementById("final-message-panel").style.display = "flex";
+  document.getElementById("success-message").style.display = "none";
+  document.getElementById("error-message").style.display = "flex";
 }
 
 function display_success(error_message) {
@@ -22,6 +24,8 @@ function display_success(error_message) {
   element.innerHTML = "";
   element.appendChild(message);
   document.getElementById("final-message-panel").style.display = "flex";
+  document.getElementById("error-message").style.display = "none";
+  document.getElementById("success-message").style.display = "flex";
 }
 
 function clean_up_error(){
