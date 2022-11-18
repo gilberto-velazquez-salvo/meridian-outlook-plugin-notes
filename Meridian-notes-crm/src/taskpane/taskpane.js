@@ -11,7 +11,7 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     //document.getElementById("run").onclick = run;
     //document.getElementById("cases").onclick = cases;
-    //document.getElementById("submit").onclick = saveNote;
+    document.getElementById("submit").onclick = saveNote;
     document.getElementById("credentials-crm-done").onclick = login_user_validation;
     document.getElementById("case-selector").onclick = getCaseSelected;
     initialSubject();
@@ -98,5 +98,25 @@ export async function saveNote() {
   console.log(fcaseidObtained);
   console.log(fsubjectObtained);
   console.log(fnoteObtained);
-  await saveNoteCRM("devteam@mailinator.com", "I9ty5tS2", fcaseidObtained, fsubjectObtained, fnoteObtained);
+
+  let config;
+  config = getConfig();
+  console.log(config.applicationUserName);
+  console.log(config.applicationPassName);
+
+  let response = await saveNoteCRM(
+    config.applicationUserName,
+    config.applicationPassName,
+    fcaseidObtained,
+    fsubjectObtained,
+    fnoteObtained
+  );
+  console.log("response from notes");
+  console.log(response);
+
+  if (response === null) {
+    display_error("The note is not valid");
+  } else {
+    display_success("The note was stored successfully");
+  }
 }

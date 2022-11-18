@@ -14,6 +14,16 @@ function display_error(error_message) {
   document.getElementById("final-message-panel").style.display = "flex";
 }
 
+function display_success(error_message) {
+  let message = document.createElement("p");
+  message.innerHTML = error_message;
+
+  var element = document.getElementById("success-message");
+  element.innerHTML = "";
+  element.appendChild(message);
+  document.getElementById("final-message-panel").style.display = "flex";
+}
+
 function clean_up_error(){
   var element = document.getElementById("error-message");
   element.innerHTML = "";

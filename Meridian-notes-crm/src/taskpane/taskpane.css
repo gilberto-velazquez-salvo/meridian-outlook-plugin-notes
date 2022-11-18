@@ -95,7 +95,6 @@ th, td{
     color: #9b1b1b;
 }
 label {
-    display: block;
     font: 1rem 'Fira Sans', sans-serif;
 }
 
@@ -104,8 +103,12 @@ label {
     margin: .4rem 0;
 }
 
-#final-message-panel{
+#error-message{
     background-color: tomato;
+}
+
+#success-message{
+    background-color: aquamarine;
 }
 
 #cases-list{
@@ -113,3 +116,36 @@ label {
     display: block; 
 }
 
+#cases-form-panel{
+    font: 1rem 'Fira Sans', sans-serif;   
+    display: block; 
+}
+
+div#cases-selector-panel, div#cases-form-panel{
+    height: 100%;
+    width: 100%;
+}
+
+input#fsubject, input#fnote,input#crm-user,input#crm-pass{
+    width: 90%;
+}
+
+div#login-panel {
+    width: 90%;    
+}
+
+input#fnote{
+    height: 50vw;
+}
+
+fieldset#case-selector{
+    display: flex;
+}
+
+label#case-selector{
+    font-size: small;
+}
+
+textarea#fnote {
+    width: 90%;
+}

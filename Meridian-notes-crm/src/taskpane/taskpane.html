@@ -39,10 +39,8 @@
     <main id="app-body" class="ms-welcome__main" style="display: none">
       <!--<h2 class="ms-font-xl">Please fill the following fields with the information desired, then click <b>Run</b>.</h2>-->
       <div id="final-message-panel">
-        <div id="success-response"></div>
-        <div id="error-response">
-          <label id="error-message"></label>
-        </div>
+        <label id="error-message"></label>
+        <label id="success-message"></label>        
       </div>
       <div id="login-panel">
         <div class="ms-Grid">
@@ -76,19 +74,22 @@
       <div id="cases-selector-panel">
         <!--<h3>Select desired case</h3>-->
         <form id="case-selector">
-          <label id="cases-list"></label>        
+          <label id="cases-list"></label>
         </form>
       </div>
 
       <div id="cases-form-panel">
         <form>
-          <label for="fcaseid">Case Id:</label>
-          <input type="number" id="fcaseid" name="fcaseid" required min="1" max="999999999" /><br />
-          <label for="fsubject">Subject:</label>
-          <input type="text" id="fsubject" name="fsubject" required />
-          <label for="fnote">Note:</label>
-          <input type="text" id="fnote" name="fnote" required /><br />
-          <!--<input type="submit" value="Submit" id="submit">-->
+          <fieldset>
+            <legend>Note information</legend>
+            <label for="fcaseid">Case Id:</label>
+            <input type="number" id="fcaseid" name="fcaseid" required min="1" max="999999999" /><br />
+            <label for="fsubject">Subject:</label>
+            <input type="text" id="fsubject" name="fsubject" required />
+            <label for="fnote">Note:</label>
+            <textarea id="fnote" name="fnote" required rows="7"></textarea><br />
+            <!--<input type="submit" value="Submit" id="submit">-->
+          </fieldset>
         </form>
         <br />
         <div role="button" id="submit" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">

@@ -59,11 +59,12 @@ async function saveNoteCRM(user, pass, fcaseidObtained, fsubjectObtained, fnoteO
       fsubjectObtained,
       fnoteObtained
     );
-    console.log(infoFromNotes);
-    console.log("infoFromDashboard");
+    const dataParsed4 = JSON.parse(infoFromNotes);
+    console.log(dataParsed4);
+    return dataParsed4;
   } catch (error) {
     console.log("Error getting the cases: ", error);
-    alert("hubo un pex");
+    return null;
   }
 
   /*
