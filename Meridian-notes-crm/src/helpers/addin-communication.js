@@ -20,7 +20,8 @@ async function getDashboardInfo(token) {
     const dataParsed1 = JSON.parse(dashboard);
     console.log("Inside getDashboardInfo");
     console.log(dataParsed1);
-    buildCasesHtml(dataParsed1.data.recently_visited_cases);
+    //buildCasesHtml(dataParsed1.data.recently_visited_cases);
+    buildCasesSelector(dataParsed1.data.recently_visited_cases);
   } catch (error) {
     console.log("Error fetching remote HTML: ", error);
   }
@@ -162,6 +163,56 @@ function makeDashboardRequest(url, token) {
   });
 }
 
+function buildCasesSelector(recentlyVisitedCases) {
+  console.log("inside buildCasesSelector");
+  console.log(recentlyVisitedCases);
+  var element = document.getElementById("cases-list");
+  //var my_form = document.createElement("form");
+  //my_form.name = "cases_form";
+  var fieldset_form = document.createElement("fieldset");
+  let field_legend = document.createElement("legend");
+  field_legend.innerHTML = "Select desired case";
+  fieldset_form.appendChild(field_legend);
+  //my_form.method = "POST";
+  //my_form.action = "http://www.another_page.com/index.htm";
+
+  for (var x = 0; x < recentlyVisitedCases.length; x++) {
+    let claim_number_obtained = recentlyVisitedCases[x].cases?.claim_number
+      ? recentlyVisitedCases[x].cases.claim_number
+      : "--";
+    let case_id_obtained = recentlyVisitedCases[x].case_id ? recentlyVisitedCases[x].case_id : "--";
+    let claimant_full_name_obtained = recentlyVisitedCases[x].cases?.claimant_full_name
+      ? recentlyVisitedCases[x].cases.claimant_full_name
+      : "--";
+
+    //var my_div = document.createElement("div");
+    var my_tb_label = document.createElement("label");
+    my_tb_label.setAttribute("for", case_id_obtained);
+    my_tb_label.innerHTML = claim_number_obtained + " " + claimant_full_name_obtained;
+    var my_tb = document.createElement("input");
+    my_tb.type = "radio";
+    my_tb.name = "case_selected_form";
+    my_tb.value = case_id_obtained;
+    my_tb.id = case_id_obtained;
+    //my_tb.innerHTML = claim_number_obtained + " " + claimant_full_name_obtained;
+    //my_div.appendChild(my_tb_label);
+    //my_div.appendChild(my_tb);
+    fieldset_form.appendChild(my_tb);
+    fieldset_form.appendChild(my_tb_label);
+  }
+
+  //my_form.appendChild(my_tb);
+
+  //If it isn't "undefined" and it isn't "null", then it exists.
+  if (typeof element != "undefined" && element != null) {
+    document.getElementById("cases-list").innerHTML = "";
+    document.getElementById("cases-list").appendChild(fieldset_form);
+  } else {
+    // Adding the entire table to the body tag
+    document.getElementById("cases-list").appendChild(fieldset_form);
+  }
+}
+
 function buildCasesHtml(recentlyVisitedCases) {
   let table = document.createElement("table");
   let thead = document.createElement("thead");
@@ -180,10 +231,10 @@ function buildCasesHtml(recentlyVisitedCases) {
   row_1.appendChild(heading_2);
   row_1.appendChild(heading_3);
   thead.appendChild(row_1);
-  console.log('before create table');
+  console.log("before create table");
   for (var x = 0; x < recentlyVisitedCases.length; x++) {
     // Creating and adding data to second row of the table
-    console.log('inside for x: '+x);
+    console.log("inside for x: " + x);
     console.log(recentlyVisitedCases[x]);
     let row_2 = document.createElement("tr");
     let row_2_data_1 = document.createElement("td");

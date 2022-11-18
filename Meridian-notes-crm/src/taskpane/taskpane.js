@@ -13,6 +13,7 @@ Office.onReady((info) => {
     //document.getElementById("cases").onclick = cases;
     //document.getElementById("submit").onclick = saveNote;
     document.getElementById("credentials-crm-done").onclick = login_user_validation;
+    document.getElementById("case-selector").onclick = getCaseSelected;
     initialSubject();
     display_initial_panes();
   }
@@ -30,13 +31,18 @@ export async function display_initial_panes() {
 }
 
 export async function login_user_validation() {
-  console.log("login_user_validation");
   var userTyped = document.getElementById("crm-user").value;
   var passTyped = document.getElementById("crm-pass").value;
+  // response=token obtained
   let response = await getToken(userTyped, passTyped);
-  console.log(response);
-  if (response===null){
-    display_error('The user and password provided are not valid');
+  if (response === null) {
+    display_error("The user and password provided are not valid");
+  } else {
+    clean_up_error();
+    hide_login_panel();
+    display_cases_form();
+    setValidConfig(userTyped, passTyped);
+    await getDashboardInfo(response);
   }
 }
 
@@ -45,6 +51,13 @@ export async function initialSubject() {
   const item = Office.context.mailbox.item;
   // Write message property value to the task pane
   document.getElementById("fsubject").value = item.subject;
+}
+
+export async function getCaseSelected() {
+  console.log("entro a case selected");
+  var valorgetCaseSeclected = $("#case-selector").serialize();
+  console.log(valorgetCaseSeclected);
+  document.getElementById("fcaseid").value = valorgetCaseSeclected.split("=")[1];
 }
 
 export async function run() {

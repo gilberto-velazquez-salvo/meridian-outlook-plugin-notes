@@ -15,3 +15,8 @@ function setConfig(config, callback) {
 
   Office.context.roamingSettings.saveAsync(callback);
 }
+
+function setValidConfig(user,pass) {
+  Office.context.roamingSettings.set("applicationUserName", user);
+  Office.context.roamingSettings.set("applicationPassName", pass);
+}

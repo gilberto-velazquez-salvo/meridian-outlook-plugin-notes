@@ -1,0 +1,2 @@
+$(document).ready((function(){$("input[name=case_selected_form]").click((function(){console.log("se hizo click con jquery"),console.log($("input:radio[name=case_selected_form]:checked").val())}))}));
+//# sourceMappingURL=displayer.js.map

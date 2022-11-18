@@ -103,3 +103,13 @@ input,
 label {
     margin: .4rem 0;
 }
+
+#final-message-panel{
+    background-color: tomato;
+}
+
+#cases-list{
+    font: 1rem 'Fira Sans', sans-serif;   
+    display: block; 
+}
+
