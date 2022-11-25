@@ -1,5 +1,6 @@
 function login_panel_only() {
   document.getElementById("cases-selector-panel").style.display = "none";
+  document.getElementById("cases-linked-panel").style.display = "none";
   document.getElementById("cases-form-panel").style.display = "none";
   document.getElementById("final-message-panel").style.display = "none";
 }
@@ -40,6 +41,7 @@ function hide_login_panel(){
 
 function display_cases_form() {
   document.getElementById("cases-selector-panel").style.display = "block";
+  document.getElementById("cases-linked-panel").style.display = "block";
   document.getElementById("cases-form-panel").style.display = "block";
 }
 

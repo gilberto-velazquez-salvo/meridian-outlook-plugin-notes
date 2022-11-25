@@ -14,7 +14,9 @@ Office.onReady((info) => {
     document.getElementById("submit").onclick = saveNote;
     document.getElementById("credentials-crm-done").onclick = login_user_validation;
     document.getElementById("case-selector").onclick = getCaseSelected;
+    document.getElementById("case-linked").onclick = getLinkedCaseSelected;
     initialSubject();
+    infoFromEmail();
     display_initial_panes();
   }
 });
@@ -42,6 +44,7 @@ export async function login_user_validation() {
     hide_login_panel();
     display_cases_form();
     setValidConfig(userTyped, passTyped);
+    await getEmailLinked(response);
     await getDashboardInfo(response);
   }
 }
@@ -50,7 +53,15 @@ export async function initialSubject() {
   // Get a reference to the current message
   const item = Office.context.mailbox.item;
   // Write message property value to the task pane
-  document.getElementById("fsubject").value = item.subject;
+  document.getElementById("fsubject").value = item.normalizedSubject;
+}
+
+
+export async function infoFromEmail() {
+  // Get a reference to the current message
+  const item = Office.context.mailbox.item;
+  console.log('infoFromEmail');
+  console.log(item);
 }
 
 export async function getCaseSelected() {
@@ -58,6 +69,12 @@ export async function getCaseSelected() {
   var valorgetCaseSeclected = $("#case-selector").serialize();
   console.log(valorgetCaseSeclected);
   document.getElementById("fcaseid").value = valorgetCaseSeclected.split("=")[1];
+}
+
+export async function getLinkedCaseSelected() {
+  console.log("getLinkedCaseSelected");
+  var valorgetCaseSeclected1 = $("#case-linked").serialize();
+  document.getElementById("fcaseid").value = valorgetCaseSeclected1.split("=")[1];
 }
 
 export async function run() {
@@ -111,6 +128,7 @@ export async function saveNote() {
     fsubjectObtained,
     fnoteObtained
   );
+  //TODO: add the call to the function who persist the relation with cases by hash
   console.log("response from notes");
   console.log(response);
 

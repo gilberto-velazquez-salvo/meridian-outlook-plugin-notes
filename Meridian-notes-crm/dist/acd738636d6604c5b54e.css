@@ -145,3 +145,7 @@ fieldset#case-selector{
 label#case-selector{
     font-size: small;
 }
+
+textarea#fnote {
+    width: 90%;
+}
