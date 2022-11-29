@@ -17,7 +17,7 @@
  }
  
  .ms-welcome__header {
-    padding: 20px;
+    padding: 10px;
     /*
     padding-bottom: 30px;
     padding-top: 20px;
@@ -25,7 +25,7 @@
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
-    flex-direction: column;
+    flex-direction: inherit;
     align-items: center;
  }
 
@@ -82,7 +82,7 @@ b {
 }
 
 .ms-font-su {
-    font-size: 25px;
+    font-size: 20px;
 }
 /* Style for table for case list */
 table{
@@ -121,7 +121,7 @@ label {
     display: block; 
 }
 
-div#cases-selector-panel, div#cases-form-panel{
+div#cases-selector-panel, div#cases-form-panel, div#cases-linked-panel{
     height: 100%;
     width: 100%;
 }

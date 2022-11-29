@@ -5,6 +5,14 @@ function login_panel_only() {
   document.getElementById("final-message-panel").style.display = "none";
 }
 
+function user_logged_in(){
+  
+  document.getElementById("cases-selector-panel").style.display = "block";
+  document.getElementById("cases-linked-panel").style.display = "block";
+  document.getElementById("cases-form-panel").style.display = "block";
+  document.getElementById("final-message-panel").style.display = "none";
+}
+
 function display_error(error_message) {
   let message = document.createElement("p");
   message.innerHTML = error_message;

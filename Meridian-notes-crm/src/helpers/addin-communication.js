@@ -59,10 +59,9 @@ async function getToken(user, pass) {
   }
 }
 
-//TODO: add function to save the relation with cases by email chain
 async function saveNoteCRM(user, pass, fcaseidObtained, fsubjectObtained, fnoteObtained) {
   try {
-    console.log("saveNote");
+    console.log("enter in saveNoteCRM");
     console.log(user);
     console.log(pass);
     console.log(fcaseidObtained);
@@ -78,6 +77,27 @@ async function saveNoteCRM(user, pass, fcaseidObtained, fsubjectObtained, fnoteO
       fsubjectObtained,
       fnoteObtained
     );
+    const dataParsed4 = JSON.parse(infoFromNotes);
+    console.log(dataParsed4);
+    return dataParsed4;
+  } catch (error) {
+    console.log("Error getting the cases: ", error);
+    return null;
+  }
+}
+
+async function saveEmailChain(user, pass, fcaseidObtained, emailHash) {
+  try {
+    console.log("saveNote");
+    console.log(user);
+    console.log(pass);
+    console.log(fcaseidObtained);
+    console.log(emailHash);
+    var remoteCodeCRM = await makeTokenRequest("http://localhost:8000/api/v1/login", user, pass);
+    const dataParsed3 = JSON.parse(remoteCodeCRM);
+    console.log(dataParsed3.data.token);
+
+    var infoFromNotes = await makeEmailHashPersist(dataParsed3.data.token, fcaseidObtained, emailHash);
     const dataParsed4 = JSON.parse(infoFromNotes);
     console.log(dataParsed4);
     return dataParsed4;
@@ -106,10 +126,10 @@ async function saveNoteCRM(user, pass, fcaseidObtained, fsubjectObtained, fnoteO
 }
 
 function makeEmailHashRequest(token, emailHash) {
-  var url_complete = "http://localhost:8000/api/v1/dashboard/emailcases/" + emailHash;
+  var url_complete = "http://localhost:8000/api/v1/case/emailcasesconsult/";
   return new Promise(function (resolve, reject) {
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", url_complete);
+    xhr.open("POST", url_complete);
     xhr.setRequestHeader("content-Type", "application/json");
     xhr.setRequestHeader("authorization", "Bearer " + token);
     xhr.onload = function () {
@@ -128,8 +148,7 @@ function makeEmailHashRequest(token, emailHash) {
         statusText: xhr.errors,
       });
     };
-    //xhr.send(JSON.stringify({ description: fnoteObtained, subject: fsubjectObtained, pinned: true }));
-    xhr.send();
+    xhr.send(JSON.stringify({ email_hash: emailHash }));
   });
 }
 
@@ -157,6 +176,33 @@ function makeStoreRequest(token, fcaseidObtained, fsubjectObtained, fnoteObtaine
       });
     };
     xhr.send(JSON.stringify({ description: fnoteObtained, subject: fsubjectObtained, pinned: true }));
+  });
+}
+
+function makeEmailHashPersist(token, fcaseidObtained, emalHashReceived) {
+  var url_complete = "http://localhost:8000/api/v1/case/" + fcaseidObtained + "/note/emailcasespersist";
+  return new Promise(function (resolve, reject) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url_complete);
+    xhr.setRequestHeader("content-Type", "application/json");
+    xhr.setRequestHeader("authorization", "Bearer " + token);
+    xhr.onload = function () {
+      if (this.status >= 200 && this.status < 300) {
+        resolve(xhr.response);
+      } else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText,
+        });
+      }
+    };
+    xhr.onerror = function () {
+      reject({
+        status: this.status,
+        statusText: xhr.errors,
+      });
+    };
+    xhr.send(JSON.stringify({ email_hash: emalHashReceived }));
   });
 }
 
@@ -220,30 +266,40 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
   let br = document.createElement("br");
   field_legend.innerHTML = "Cases Linked to Email Thread";
   fieldset_form.appendChild(field_legend);
-  for (var x = 0; x < recentlyVisitedHashCases.length; x++) {
-    let claim_number_obtained = recentlyVisitedHashCases[x].claim_number
-      ? recentlyVisitedHashCases[x].claim_number
-      : "--";
-    let case_id_obtained = recentlyVisitedHashCases[x].case_id ? recentlyVisitedHashCases[x].case_id : "--";
-    let claimant_full_name_obtained = recentlyVisitedHashCases[x].claimant_full_name
-      ? recentlyVisitedHashCases[x].claimant_full_name
-      : "--";
+  console.log("test evaluation");
+  console.log(recentlyVisitedHashCases.length);
+  console.log(recentlyVisitedHashCases.length > 0);
+  if (recentlyVisitedHashCases.length > 0) {
+    console.log("result greather than 0");
+    for (var x = 0; x < recentlyVisitedHashCases.length; x++) {
+      let claim_number_obtained = recentlyVisitedHashCases[x].claim_number
+        ? recentlyVisitedHashCases[x].claim_number
+        : "--";
+      let case_id_obtained = recentlyVisitedHashCases[x].case_id ? recentlyVisitedHashCases[x].case_id : "--";
+      let claimant_full_name_obtained = recentlyVisitedHashCases[x].claimant_full_name
+        ? recentlyVisitedHashCases[x].claimant_full_name
+        : "--";
 
-    //var my_div = document.createElement("div");
+      //var my_div = document.createElement("div");
+      var my_tb_label = document.createElement("label");
+      my_tb_label.setAttribute("for", case_id_obtained);
+      my_tb_label.innerHTML = claim_number_obtained + " " + claimant_full_name_obtained;
+      var my_tb = document.createElement("input");
+      my_tb.type = "radio";
+      my_tb.name = "case_selected_form";
+      my_tb.value = case_id_obtained;
+      my_tb.id = case_id_obtained;
+      //my_tb.innerHTML = claim_number_obtained + " " + claimant_full_name_obtained;
+      //my_div.appendChild(my_tb_label);
+      //my_div.appendChild(my_tb);
+      fieldset_form.appendChild(my_tb);
+      fieldset_form.appendChild(my_tb_label);
+      fieldset_form.appendChild(br.cloneNode(true));
+    }
+  } else {
     var my_tb_label = document.createElement("label");
-    my_tb_label.setAttribute("for", case_id_obtained);
-    my_tb_label.innerHTML = claim_number_obtained + " " + claimant_full_name_obtained;
-    var my_tb = document.createElement("input");
-    my_tb.type = "radio";
-    my_tb.name = "case_selected_form";
-    my_tb.value = case_id_obtained;
-    my_tb.id = case_id_obtained;
-    //my_tb.innerHTML = claim_number_obtained + " " + claimant_full_name_obtained;
-    //my_div.appendChild(my_tb_label);
-    //my_div.appendChild(my_tb);
-    fieldset_form.appendChild(my_tb);
+    my_tb_label.innerHTML = " No cases linked to Email thread";
     fieldset_form.appendChild(my_tb_label);
-    fieldset_form.appendChild(br.cloneNode(true));
   }
   if (typeof element != "undefined" && element != null) {
     document.getElementById("cases-linked-list").innerHTML = "";
@@ -264,7 +320,7 @@ function buildCasesSelector(recentlyVisitedCases) {
   let field_legend = document.createElement("legend");
   let br = document.createElement("br");
   field_legend.innerHTML = "Recently Visited Cases";
-  fieldset_form.appendChild(field_legend);  
+  fieldset_form.appendChild(field_legend);
   for (var x = 0; x < recentlyVisitedCases.length; x++) {
     let claim_number_obtained = recentlyVisitedCases[x].cases?.claim_number
       ? recentlyVisitedCases[x].cases.claim_number

@@ -23,13 +23,26 @@ Office.onReady((info) => {
 
 export async function display_initial_panes() {
   let config;
+  console.log("display_initial_panes");
   config = getConfig();
   console.log(config);
   if (config.applicationUserName != null) {
-    console.log("user fileed");
+    clean_up_error();
+    hide_login_panel();
+    user_logged_in();
+    initialLoginExistent();
   } else {
     login_panel_only();
   }
+}
+
+export async function initialLoginExistent() {
+  let config;
+  console.log("initialLoginExistent");
+  config = getConfig();
+  document.getElementById("crm-user").value = config.applicationUserName;
+  document.getElementById("crm-pass").value = config.applicationPassName;
+  login_user_validation();
 }
 
 export async function login_user_validation() {
@@ -56,11 +69,10 @@ export async function initialSubject() {
   document.getElementById("fsubject").value = item.normalizedSubject;
 }
 
-
 export async function infoFromEmail() {
   // Get a reference to the current message
   const item = Office.context.mailbox.item;
-  console.log('infoFromEmail');
+  console.log("infoFromEmail");
   console.log(item);
 }
 
@@ -112,6 +124,8 @@ export async function saveNote() {
   var fsubjectObtained = document.getElementById("fsubject").value;
   //Note
   var fnoteObtained = document.getElementById("fnote").value;
+
+  console.log("Enter in save Note");
   console.log(fcaseidObtained);
   console.log(fsubjectObtained);
   console.log(fnoteObtained);
@@ -128,11 +142,19 @@ export async function saveNote() {
     fsubjectObtained,
     fnoteObtained
   );
-  //TODO: add the call to the function who persist the relation with cases by hash
+
   console.log("response from notes");
   console.log(response);
 
-  if (response === null) {
+  const emailHash = Office.context.mailbox.item.conversationId;
+  let response2 = await saveEmailChain(
+    config.applicationUserName,
+    config.applicationPassName,
+    fcaseidObtained,
+    emailHash
+  );
+
+  if (response === null || response2 === null) {
     display_error("The note is not valid");
   } else {
     display_success("The note was stored successfully");
