@@ -23,7 +23,7 @@
     padding-top: 20px;
     */
     display: -webkit-flex;
-    display: flex;
+    display: none;
     -webkit-flex-direction: column;
     flex-direction: inherit;
     align-items: center;
