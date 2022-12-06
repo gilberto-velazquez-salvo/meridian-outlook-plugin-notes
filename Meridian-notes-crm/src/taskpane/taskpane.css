@@ -149,3 +149,9 @@ label#case-selector{
 textarea#fnote {
     width: 90%;
 }
+
+form#case-selector {   
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

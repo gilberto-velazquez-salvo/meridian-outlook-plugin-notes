@@ -13,6 +13,21 @@ async function recentlyVisitedCases(user, pass) {
   }
 }
 
+async function getClipboard() {
+  try {
+    console.log("getClipboard");
+    var remoteCodeclip = await makeClipboardRequest("http://localhost:3030/");
+    const dataParsed11 = JSON.parse(remoteCodeclip);
+    console.log(dataParsed11);
+    console.log(dataParsed11.info ? dataParsed11.info : "--");
+    return dataParsed11.info ? dataParsed11.info : "--";
+  } catch (error) {
+    console.log("Error getting the cases: ", error);
+    return null;
+  }
+}
+
+
 async function getDashboardInfo(token) {
   try {
     var dashboard = await makeDashboardRequest("http://localhost:8000/api/v1/dashboard", token);
@@ -22,6 +37,8 @@ async function getDashboardInfo(token) {
     console.log(dataParsed1);
     //buildCasesHtml(dataParsed1.data.recently_visited_cases);
     buildCasesSelector(dataParsed1.data.recently_visited_cases);
+    console.log("--- inside addin, get the clipboard ---");
+    get_copied_text_addin();
   } catch (error) {
     console.log("Error fetching remote HTML: ", error);
   }
@@ -231,6 +248,33 @@ function makeTokenRequest(url, user, pass) {
   });
 }
 
+
+function makeClipboardRequest(url) {
+  return new Promise(function (resolve, reject) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+    xhr.onload = function () {
+      if (this.status >= 200 && this.status < 300) {
+        resolve(xhr.response);
+      } else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText,
+        });
+      }
+    };
+    xhr.onerror = function () {
+      reject({
+        status: this.status,
+        statusText: xhr.statusText,
+      });
+    };
+    xhr.send();
+  });
+}
+
 function makeDashboardRequest(url, token) {
   return new Promise(function (resolve, reject) {
     let xhr = new XMLHttpRequest();
@@ -413,3 +457,18 @@ function buildCasesHtml(recentlyVisitedCases) {
   }
   //document.getElementById("cases-list").innerHTML = "<table><thead><tr><th colspan=\"2\">The table header</th></tr></thead><tbody><tr><td>The table body</td><td>with two columns</td></tr></tbody></table>";
 }
+
+function get_copied_text_addin() {
+  const range = window.getSelection();
+  console.log("get_copied_text_addin, range selection");
+  console.log(range.toString());
+  console.log(range);
+  /* copia solo lo del tab
+  document.addEventListener("selectionchange", (e) => {
+    console.log("Archor node - ", window.getSelection().anchorNode);
+    console.log("Focus Node - ", window.getSelection().toString());
+  });
+*/
+}
+
+
