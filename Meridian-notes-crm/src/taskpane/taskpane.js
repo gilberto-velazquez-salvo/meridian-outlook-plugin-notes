@@ -5,12 +5,9 @@
 
 /* global document, Office */
 Office.onReady((info) => {
-  console.log(info);
+  //console.log(info);
   if (info.host === Office.HostType.Outlook) {
-    //document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
-    //document.getElementById("run").onclick = run;
-    //document.getElementById("cases").onclick = cases;
     document.getElementById("submit").onclick = saveNote;
     document.getElementById("credentials-crm-done").onclick = login_user_validation;
     document.getElementById("case-selector").onclick = getCaseSelected;
@@ -19,98 +16,14 @@ Office.onReady((info) => {
     initialClipboard();
     infoFromEmail();
     display_initial_panes();
-
-    /*
-    readClipboardFromDevTools().then((r) => console.log("Returned value: ", r));
-
-    parent.document.addEventListener("selectionchange", (e) => {
-      console.log("Archor node - ", window.getSelection().anchorNode);
-      console.log("Focus Node - ", window.getSelection().toString());
-    });
-
-    getSelectionText();
-    console.log("Clipboard in taskpane.js");
-    navigator.clipboard
-      .readText()
-      .then((text) => {
-        console.log("Pasted content: ", text);
-      })
-      .catch((err) => {
-        console.error("Failed to read clipboard contents: ", err);
-      });
-      */
   }
 });
 
-function getSelectionText() {
-  console.log("inside getSelectionTExt");
-  var text = "";
-  var activeEl = document.activeElement;
-  var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
-  if (
-    activeElTagName == "textarea" ||
-    (activeElTagName == "input" &&
-      /^(?:text|search|password|tel|url)$/i.test(activeEl.type) &&
-      typeof activeEl.selectionStart == "number")
-  ) {
-    text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
-  } else if (window.getSelection) {
-    text = window.getSelection().toString();
-  }
-  console.log(text);
-  return text;
-}
-
-function readClipboardFromDevTools() {
-  return new Promise((resolve, reject) => {
-    const _asyncCopyFn = async () => {
-      try {
-        const value = await navigator.clipboard.readText();
-        console.log(`${value} is read!`);
-        resolve(value);
-      } catch (e) {
-        reject(e);
-      }
-      window.removeEventListener("focus", _asyncCopyFn);
-    };
-
-    window.addEventListener("focus", _asyncCopyFn);
-    console.log("Hit <Tab> to give focus back to document (or we will face a DOMException);");
-  });
-}
-
-export async function get_copied_text() {
-  const range = window.getSelection();
-  console.log("get_copied_text, range selection");
-  console.log(range.toString());
-  console.log(range);
-  /* copia solo lo del tab
-  document.addEventListener("selectionchange", (e) => {
-    console.log("Archor node - ", window.getSelection().anchorNode);
-    console.log("Focus Node - ", window.getSelection().toString());
-  });
-*/
-  console.log("get_copied_text, text variable");
-  var text = "";
-  if (window.getSelection) {
-    text = window.getSelection().toString();
-  } else if (document.selection && document.selection.type != "Control") {
-    text = document.selection.createRange().text;
-  }
-  console.log(text);
-
-  const permission = await navigator.permissions.query({ name: "clipboard-read" });
-  var salida = "";
-  navigator.clipboard.readText().then((clipText) => (salida = clipText));
-  console.log("get_copied_text, navigator");
-  console.log(salida);
-}
-
 export async function display_initial_panes() {
   let config;
-  console.log("display_initial_panes");
+  //console.log("display_initial_panes");
   config = getConfig();
-  console.log(config);
+  //console.log(config);
   if (config.applicationUserName != null) {
     clean_up_error();
     hide_login_panel();
@@ -123,7 +36,7 @@ export async function display_initial_panes() {
 
 export async function initialLoginExistent() {
   let config;
-  console.log("initialLoginExistent");
+  //console.log("initialLoginExistent");
   config = getConfig();
   document.getElementById("crm-user").value = config.applicationUserName;
   document.getElementById("crm-pass").value = config.applicationPassName;
@@ -160,18 +73,18 @@ export async function initialSubject() {
 export async function infoFromEmail() {
   // Get a reference to the current message
   const item = Office.context.mailbox.item;
-  console.log("infoFromEmail");
-  console.log(item);
+  //console.log("infoFromEmail");
+  //console.log(item);
   // Get the address entities from the item.
   const entities = Office.context.mailbox.item.getEntities();
   // Check to make sure that address entities are present.
   if (null != entities && null != entities.addresses && undefined != entities.addresses) {
     //Addresses are present, so use them here.
-    console.log(entities);
+    //console.log(entities);
   }
 
   const bodyEmail = Office.context.mailbox.item.body;
-  console.log(bodyEmail);
+  //console.log(bodyEmail);
 
   // This example gets the body of the item as plain text.
   Office.context.mailbox.item.body.getAsync(
@@ -179,8 +92,8 @@ export async function infoFromEmail() {
     { asyncContext: "This is passed to the callback" },
     function callback(result) {
       // Do something with the result.
-      console.log("log result");
-      console.log(result);
+      //console.log("log result");
+      //console.log(result);
     }
   );
   /*
@@ -194,7 +107,7 @@ export async function infoFromEmail() {
       // callback
       const dataValue = result.value;
       // write('Selected data is: ' + dataValue);
-      console.log("Selected data is: " + dataValue);
+      //console.log("Selected data is: " + dataValue);
     }
   );*/
 }
@@ -202,8 +115,9 @@ export async function infoFromEmail() {
 export async function getCaseSelected() {
   console.log("entro a case selected");
   var valorgetCaseSeclected = $("#case-selector").serialize();
-  console.log(valorgetCaseSeclected);
+  //console.log(valorgetCaseSeclected);
   document.getElementById("fcaseid").value = valorgetCaseSeclected.split("=")[1];
+  clearCasesLinked();
   //lockFormCasesLinked();
   //unlockForm("cases-selector-panel");
 }
@@ -212,6 +126,7 @@ export async function getLinkedCaseSelected() {
   console.log("getLinkedCaseSelected");
   var valorgetCaseSeclected1 = $("#case-linked").serialize();
   document.getElementById("fcaseid").value = valorgetCaseSeclected1.split("=")[1];
+  clearMostRecentlyVisited();
   //unlockForm("cases-linked-panel");
   //lockFormCasesVisited();
 }
@@ -223,11 +138,11 @@ export async function run() {
   tokenFromUser = await recentlyVisitedCases(config.applicationUserName, config.applicationPassName);
 
   // Write message property value to the task pane
-  console.log("item element");
-  //console.log(item);
+  //console.log("item element");
+  ////console.log(item);
   document.getElementById("item-subject").innerHTML = "<b>Subject:</b> <br/>" + item.subject;
-  console.log(config.applicationUserName);
-  console.log(tokenFromUser);
+  //console.log(config.applicationUserName);
+  //console.log(tokenFromUser);
   //Get the active cases with the id's
 }
 
@@ -238,10 +153,10 @@ export async function cases() {
   await recentlyVisitedCases(config.applicationUserName, config.applicationPassName);
 
   // Write message property value to the task pane
-  //console.log("item element");
-  //console.log(item);
+  ////console.log("item element");
+  ////console.log(item);
   //document.getElementById("cases-list").innerHTML = "<b>Subject:</b> <br/>" + item.subject;
-  //console.log(config.applicationUserName);
+  ////console.log(config.applicationUserName);
 }
 
 export async function saveNote() {
@@ -252,15 +167,15 @@ export async function saveNote() {
   //Note
   var fnoteObtained = document.getElementById("fnote").value;
 
-  console.log("Enter in save Note");
-  console.log(fcaseidObtained);
-  console.log(fsubjectObtained);
-  console.log(fnoteObtained);
+  //console.log("Enter in save Note");
+  //console.log(fcaseidObtained);
+  //console.log(fsubjectObtained);
+  //console.log(fnoteObtained);
 
   let config;
   config = getConfig();
-  console.log(config.applicationUserName);
-  console.log(config.applicationPassName);
+  //console.log(config.applicationUserName);
+  //console.log(config.applicationPassName);
 
   let response = await saveNoteCRM(
     config.applicationUserName,
@@ -270,8 +185,8 @@ export async function saveNote() {
     fnoteObtained
   );
 
-  console.log("response from notes");
-  console.log(response);
+  //console.log("response from notes");
+  //console.log(response);
 
   const emailHash = Office.context.mailbox.item.conversationId;
   let response2 = await saveEmailChain(

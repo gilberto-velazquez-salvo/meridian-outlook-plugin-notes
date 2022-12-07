@@ -76,12 +76,16 @@ function unlockForm(formName) {
     });
 }
 
-/*
-$(document).ready(function()
-{
-    $("input[name=case_selected_form]").click(function () {    
-        console.log('se hizo click con jquery');
-        console.log($('input:radio[name=case_selected_form]:checked').val());
-    });
-});
-*/
+function clearMostRecentlyVisited() {
+  var ele = document.getElementById("case-selector");
+  for(var i=0;i<ele.length;i++){
+    ele[i].checked = false;
+  }
+}
+
+function clearCasesLinked() {
+  var ele = document.getElementById("case-linked");
+  for(var i=0;i<ele.length;i++){
+    ele[i].checked = false;
+  }
+}

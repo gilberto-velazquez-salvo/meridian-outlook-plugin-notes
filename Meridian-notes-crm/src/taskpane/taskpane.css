@@ -64,16 +64,17 @@
  }
  
  .ms-welcome__action.ms-Button--hero {
-     margin-top: 30px;
+    margin: 5% 40% 5% 35%;
  }
  
 .ms-Button.ms-Button--hero .ms-Button-label {
-  color: #0078d7;
+  color: #9b1b1b;
+  font-weight: bold;
 }
 
 .ms-Button.ms-Button--hero:hover .ms-Button-label,
 .ms-Button.ms-Button--hero:focus .ms-Button-label{
-  color: #005a9e;
+  color: #6c1313;
   cursor: pointer;
 }
 
@@ -94,9 +95,10 @@ th, td{
     border: 1px solid #000000;
     color: #9b1b1b;
 }
+/*
 label {
     font: 1rem 'Fira Sans', sans-serif;
-}
+}*/
 
 input,
 label {
@@ -112,12 +114,12 @@ label {
 }
 
 #cases-list{
-    font: 1rem 'Fira Sans', sans-serif;   
+    /*font: 1rem 'Fira Sans', sans-serif;   */
     display: block; 
 }
 
 #cases-form-panel{
-    font: 1rem 'Fira Sans', sans-serif;   
+    /*font: 1rem 'Fira Sans', sans-serif;   */
     display: block; 
 }
 
@@ -154,4 +156,15 @@ form#case-selector {
     height: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+form#case-linked {   
+    height: 160px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+legend {
+    font-family: cursive;
+    font-size: large;
 }

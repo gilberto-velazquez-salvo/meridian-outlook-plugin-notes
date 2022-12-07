@@ -1,28 +1,28 @@
 async function recentlyVisitedCases(user, pass) {
   try {
-    console.log("recentlyVisitedCases");
+    //console.log("recentlyVisitedCases");
     var remoteCode = await makeTokenRequest("http://localhost:8000/api/v1/login", user, pass);
     const dataParsed = JSON.parse(remoteCode);
-    console.log(dataParsed);
-    console.log(dataParsed.data?.token);
+    //console.log(dataParsed);
+    //console.log(dataParsed.data?.token);
     var infoFromDashboard = await getDashboardInfo(dataParsed.data.token);
-    console.log(infoFromDashboard);
-    console.log("infoFromDashboard");
+    //console.log(infoFromDashboard);
+    //console.log("infoFromDashboard");
   } catch (error) {
-    console.log("Error getting the cases: ", error);
+    //console.log("Error getting the cases: ", error);
   }
 }
 
 async function getClipboard() {
   try {
-    console.log("getClipboard");
+    //console.log("getClipboard");
     var remoteCodeclip = await makeClipboardRequest("http://localhost:3030/");
     const dataParsed11 = JSON.parse(remoteCodeclip);
-    console.log(dataParsed11);
-    console.log(dataParsed11.info ? dataParsed11.info : "--");
+    //console.log(dataParsed11);
+    //console.log(dataParsed11.info ? dataParsed11.info : "--");
     return dataParsed11.info ? dataParsed11.info : "--";
   } catch (error) {
-    console.log("Error getting the cases: ", error);
+    //console.log("Error getting the cases: ", error);
     return null;
   }
 }
@@ -31,62 +31,62 @@ async function getClipboard() {
 async function getDashboardInfo(token) {
   try {
     var dashboard = await makeDashboardRequest("http://localhost:8000/api/v1/dashboard", token);
-    console.log("dashboard");
+    //console.log("dashboard");
     const dataParsed1 = JSON.parse(dashboard);
-    console.log("Inside getDashboardInfo");
-    console.log(dataParsed1);
+    //console.log("Inside getDashboardInfo");
+    //console.log(dataParsed1);
     //buildCasesHtml(dataParsed1.data.recently_visited_cases);
     buildCasesSelector(dataParsed1.data.recently_visited_cases);
-    console.log("--- inside addin, get the clipboard ---");
+    //console.log("--- inside addin, get the clipboard ---");
     get_copied_text_addin();
   } catch (error) {
-    console.log("Error fetching remote HTML: ", error);
+    //console.log("Error fetching remote HTML: ", error);
   }
 }
 
 async function getEmailLinked(token) {
   try {
     let conversationId = Office.context.mailbox.item.conversationId;
-    console.log("inside getEmailLinked");
+    //console.log("inside getEmailLinked");
     var email_linked = await makeEmailHashRequest(token, conversationId);
-    console.log("email_linked");
+    //console.log("email_linked");
     const dataParsed3 = JSON.parse(email_linked);
-    console.log("Inside getEmailLinked");
-    console.log(dataParsed3);
+    //console.log("Inside getEmailLinked");
+    //console.log(dataParsed3);
     //buildCasesHtml(dataParsed1.data.recently_visited_cases);
     //buildCasesSelector(dataParsed1.data.recently_visited_cases);
     buildCasesHashSelector(dataParsed3.data.details);
   } catch (error) {
-    console.log("Error fetching remote emails", error);
+    //console.log("Error fetching remote emails", error);
   }
 }
 
 async function getToken(user, pass) {
   try {
     var remoteCode = await makeTokenRequest("http://localhost:8000/api/v1/login", user, pass);
-    //console.log("remoteCode");
+    ////console.log("remoteCode");
     const dataParsed = JSON.parse(remoteCode);
-    //console.log("dataParsed");
-    console.log(dataParsed);
-    console.log(dataParsed.data.token);
+    ////console.log("dataParsed");
+    //console.log(dataParsed);
+    //console.log(dataParsed.data.token);
     return dataParsed.data.token;
   } catch (error) {
-    console.log("Error fetching remote HTML: ", error);
+    //console.log("Error fetching remote HTML: ", error);
     return null;
   }
 }
 
 async function saveNoteCRM(user, pass, fcaseidObtained, fsubjectObtained, fnoteObtained) {
   try {
-    console.log("enter in saveNoteCRM");
-    console.log(user);
-    console.log(pass);
-    console.log(fcaseidObtained);
-    console.log(fsubjectObtained);
-    console.log(fnoteObtained);
+    //console.log("enter in saveNoteCRM");
+    //console.log(user);
+    //console.log(pass);
+    //console.log(fcaseidObtained);
+    //console.log(fsubjectObtained);
+    //console.log(fnoteObtained);
     var remoteCodeCRM = await makeTokenRequest("http://localhost:8000/api/v1/login", user, pass);
     const dataParsed3 = JSON.parse(remoteCodeCRM);
-    console.log(dataParsed3.data.token);
+    //console.log(dataParsed3.data.token);
 
     var infoFromNotes = await makeStoreRequest(
       dataParsed3.data.token,
@@ -95,50 +95,50 @@ async function saveNoteCRM(user, pass, fcaseidObtained, fsubjectObtained, fnoteO
       fnoteObtained
     );
     const dataParsed4 = JSON.parse(infoFromNotes);
-    console.log(dataParsed4);
+    //console.log(dataParsed4);
     return dataParsed4;
   } catch (error) {
-    console.log("Error getting the cases: ", error);
+    //console.log("Error getting the cases: ", error);
     return null;
   }
 }
 
 async function saveEmailChain(user, pass, fcaseidObtained, emailHash) {
   try {
-    console.log("saveNote");
-    console.log(user);
-    console.log(pass);
-    console.log(fcaseidObtained);
-    console.log(emailHash);
+    //console.log("saveNote");
+    //console.log(user);
+    //console.log(pass);
+    //console.log(fcaseidObtained);
+    //console.log(emailHash);
     var remoteCodeCRM = await makeTokenRequest("http://localhost:8000/api/v1/login", user, pass);
     const dataParsed3 = JSON.parse(remoteCodeCRM);
-    console.log(dataParsed3.data.token);
+    //console.log(dataParsed3.data.token);
 
     var infoFromNotes = await makeEmailHashPersist(dataParsed3.data.token, fcaseidObtained, emailHash);
     const dataParsed4 = JSON.parse(infoFromNotes);
-    console.log(dataParsed4);
+    //console.log(dataParsed4);
     return dataParsed4;
   } catch (error) {
-    console.log("Error getting the cases: ", error);
+    //console.log("Error getting the cases: ", error);
     return null;
   }
 
   /*
   try {
-    console.log("saveNote");
+    //console.log("saveNote");
     var remoteCode = await makeTokenRequest("http://localhost:8000/api/v1/login", user, pass);
     const dataParsed = JSON.parse(remoteCode);
-    console.log(dataParsed.data.token);
+    //console.log(dataParsed.data.token);
     var infoFromDashboard = await makeStoreRequest(
       dataParsed.data.token,
       fcaseidObtained,
       fsubjectObtained,
       fnoteObtained
     );
-    console.log(infoFromDashboard);
-    console.log("infoFromDashboard");
+    //console.log(infoFromDashboard);
+    //console.log("infoFromDashboard");
   } catch (error) {
-    console.log("Error getting the cases: ", error);
+    //console.log("Error getting the cases: ", error);
   }*/
 }
 
@@ -302,19 +302,19 @@ function makeDashboardRequest(url, token) {
 }
 
 function buildCasesHashSelector(recentlyVisitedHashCases) {
-  console.log("inside buildCasesHashSelector");
-  console.log(recentlyVisitedHashCases);
+  //console.log("inside buildCasesHashSelector");
+  //console.log(recentlyVisitedHashCases);
   var element = document.getElementById("cases-linked-list");
   var fieldset_form = document.createElement("fieldset");
   let field_legend = document.createElement("legend");
   let br = document.createElement("br");
   field_legend.innerHTML = "Cases Linked to Email Thread";
   fieldset_form.appendChild(field_legend);
-  console.log("test evaluation");
-  console.log(recentlyVisitedHashCases.length);
-  console.log(recentlyVisitedHashCases.length > 0);
+  //console.log("test evaluation");
+  //console.log(recentlyVisitedHashCases.length);
+  //console.log(recentlyVisitedHashCases.length > 0);
   if (recentlyVisitedHashCases.length > 0) {
-    console.log("result greather than 0");
+    //console.log("result greather than 0");
     for (var x = 0; x < recentlyVisitedHashCases.length; x++) {
       let claim_number_obtained = recentlyVisitedHashCases[x].claim_number
         ? recentlyVisitedHashCases[x].claim_number
@@ -355,8 +355,8 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
 }
 
 function buildCasesSelector(recentlyVisitedCases) {
-  console.log("inside buildCasesSelector");
-  console.log(recentlyVisitedCases);
+  //console.log("inside buildCasesSelector");
+  //console.log(recentlyVisitedCases);
   var element = document.getElementById("cases-list");
   //var my_form = document.createElement("form");
   //my_form.name = "cases_form";
@@ -421,11 +421,11 @@ function buildCasesHtml(recentlyVisitedCases) {
   row_1.appendChild(heading_2);
   row_1.appendChild(heading_3);
   thead.appendChild(row_1);
-  console.log("before create table");
+  //console.log("before create table");
   for (var x = 0; x < recentlyVisitedCases.length; x++) {
     // Creating and adding data to second row of the table
-    console.log("inside for x: " + x);
-    console.log(recentlyVisitedCases[x]);
+    //console.log("inside for x: " + x);
+    //console.log(recentlyVisitedCases[x]);
     let row_2 = document.createElement("tr");
     let row_2_data_1 = document.createElement("td");
     row_2_data_1.innerHTML = recentlyVisitedCases[x].case_id ? recentlyVisitedCases[x].case_id : "--";
@@ -460,13 +460,13 @@ function buildCasesHtml(recentlyVisitedCases) {
 
 function get_copied_text_addin() {
   const range = window.getSelection();
-  console.log("get_copied_text_addin, range selection");
-  console.log(range.toString());
-  console.log(range);
+  //console.log("get_copied_text_addin, range selection");
+  //console.log(range.toString());
+  //console.log(range);
   /* copia solo lo del tab
   document.addEventListener("selectionchange", (e) => {
-    console.log("Archor node - ", window.getSelection().anchorNode);
-    console.log("Focus Node - ", window.getSelection().toString());
+    //console.log("Archor node - ", window.getSelection().anchorNode);
+    //console.log("Focus Node - ", window.getSelection().toString());
   });
 */
 }
