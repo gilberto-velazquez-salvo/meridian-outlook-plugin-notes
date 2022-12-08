@@ -154,13 +154,13 @@ textarea#fnote {
 
 form#case-selector {   
     height: 300px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
 form#case-linked {   
     height: 160px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
