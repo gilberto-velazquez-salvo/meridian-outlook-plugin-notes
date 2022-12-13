@@ -67,7 +67,8 @@ export async function initialSubject() {
 export async function getCaseSelected() {
   console.log("entro a case selected");
   var valorgetCaseSeclected = $("#case-selector").serialize();
-  // console.log(valorgetCaseSeclected);
+  console.log(valorgetCaseSeclected);
+  document.getElementById("linked_cases_title").innerHTML = "Linked Cases";
   document.getElementById("recent_cases_title").innerHTML = valorgetCaseSeclected.split("=")[1];
   document.getElementById("fcaseid").value = valorgetCaseSeclected.split("=")[1];
   clearCasesLinked();
@@ -76,6 +77,9 @@ export async function getCaseSelected() {
 export async function getLinkedCaseSelected() {
   console.log("getLinkedCaseSelected");
   var valorgetCaseSeclected1 = $("#case-linked").serialize();
+  console.log(valorgetCaseSeclected1);
+  document.getElementById("recent_cases_title").innerHTML = "Recent Cases";
+  document.getElementById("linked_cases_title").innerHTML = valorgetCaseSeclected1.split("=")[1];
   document.getElementById("fcaseid").value = valorgetCaseSeclected1.split("=")[1];
   clearMostRecentlyVisited();
 }

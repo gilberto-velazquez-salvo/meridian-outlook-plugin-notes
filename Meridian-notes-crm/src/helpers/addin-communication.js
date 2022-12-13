@@ -254,6 +254,7 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
     field_legend_recent_cases.classList.remove("no_legend");
   };
   let title_text = document.createElement("b");
+  title_text.setAttribute("id", "linked_cases_title");
   title_text.innerHTML = "Linked Cases";
   let icon = document.createElement("img");
   field_legend_linked_cases.classList.add("no_legend");
@@ -289,7 +290,7 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
       fieldset_form_linked_cases.appendChild(my_tb_label);
       fieldset_form_linked_cases.appendChild(br.cloneNode(true));
     }
-    // fieldset_form_recent_cases.classList.add("arrow");
+    fieldset_form_recent_cases.classList.add("arrow");
   } else {
     fieldset_form_recent_cases.classList.add("arrow");
     var my_tb_label = document.createElement("label");
