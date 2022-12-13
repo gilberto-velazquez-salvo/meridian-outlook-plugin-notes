@@ -134,7 +134,8 @@ function makeStoreRequest(token, fcaseidObtained, fsubjectObtained, fnoteObtaine
 }
 
 function makeEmailHashPersist(token, fcaseidObtained, emalHashReceived) {
-  var url_complete = "https://stage-api.meridianmedlegal.com/api/v1/case/" + fcaseidObtained + "/note/emailcasespersist";
+  var url_complete =
+    "https://stage-api.meridianmedlegal.com/api/v1/case/" + fcaseidObtained + "/note/emailcasespersist";
   return new Promise(function (resolve, reject) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url_complete);
@@ -237,13 +238,35 @@ function makeDashboardRequest(url, token) {
   });
 }
 
+var fieldset_form_linked_cases = document.createElement("fieldset");
+let field_legend_linked_cases = document.createElement("legend");
+var fieldset_form_recent_cases = document.createElement("fieldset");
+let field_legend_recent_cases = document.createElement("legend");
+
 function buildCasesHashSelector(recentlyVisitedHashCases) {
   var element = document.getElementById("cases-linked-list");
-  var fieldset_form = document.createElement("fieldset");
-  let field_legend = document.createElement("legend");
   let br = document.createElement("br");
-  field_legend.innerHTML = "Cases Linked to Email Thread";
-  fieldset_form.appendChild(field_legend);
+  let title_container = document.createElement("div");
+  title_container.onclick = () => {
+    fieldset_form_linked_cases.classList.remove("arrow");
+    field_legend_linked_cases.classList.add("no_legend");
+    fieldset_form_recent_cases.classList.add("arrow");
+    field_legend_recent_cases.classList.remove("no_legend");
+  };
+  let title_text = document.createElement("b");
+  title_text.innerHTML = "Linked Cases";
+  let icon = document.createElement("img");
+  field_legend_linked_cases.classList.add("no_legend");
+  title_container.classList.add("title_container");
+  icon.src = "../../assets/briefcase.png";
+  fieldset_form_linked_cases.classList.add("fieldset");
+  title_container.appendChild(icon);
+  title_container.appendChild(title_text);
+
+  field_legend_linked_cases.innerHTML = "Linked Cases";
+
+  fieldset_form_linked_cases.appendChild(title_container);
+  fieldset_form_linked_cases.appendChild(field_legend_linked_cases);
   if (recentlyVisitedHashCases.length > 0) {
     for (var x = 0; x < recentlyVisitedHashCases.length; x++) {
       let claim_number_obtained = recentlyVisitedHashCases[x].claim_number
@@ -262,30 +285,55 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
       my_tb.name = "case_selected_form";
       my_tb.value = case_id_obtained;
       my_tb.id = case_id_obtained;
-      fieldset_form.appendChild(my_tb);
-      fieldset_form.appendChild(my_tb_label);
-      fieldset_form.appendChild(br.cloneNode(true));
+      fieldset_form_linked_cases.appendChild(my_tb);
+      fieldset_form_linked_cases.appendChild(my_tb_label);
+      fieldset_form_linked_cases.appendChild(br.cloneNode(true));
     }
+    // fieldset_form_recent_cases.classList.add("arrow");
   } else {
+    fieldset_form_recent_cases.classList.add("arrow");
     var my_tb_label = document.createElement("label");
     my_tb_label.innerHTML = " No cases linked to Email thread";
-    fieldset_form.appendChild(my_tb_label);
+    fieldset_form_linked_cases.appendChild(my_tb_label);
   }
   if (typeof element != "undefined" && element != null) {
     document.getElementById("cases-linked-list").innerHTML = "";
-    document.getElementById("cases-linked-list").appendChild(fieldset_form);
+    document.getElementById("cases-linked-list").appendChild(fieldset_form_linked_cases);
   } else {
-    document.getElementById("cases-linked-list").appendChild(fieldset_form);
+    document.getElementById("cases-linked-list").appendChild(fieldset_form_linked_cases);
   }
 }
 
 function buildCasesSelector(recentlyVisitedCases) {
   var element = document.getElementById("cases-list");
-  var fieldset_form = document.createElement("fieldset");
-  let field_legend = document.createElement("legend");
   let br = document.createElement("br");
-  field_legend.innerHTML = "Recently Visited Cases";
-  fieldset_form.appendChild(field_legend);
+  let title_container = document.createElement("div");
+  title_container.onclick = () => {
+    fieldset_form_recent_cases.classList.remove("arrow");
+    field_legend_recent_cases.classList.add("no_legend");
+    fieldset_form_linked_cases.classList.add("arrow");
+    field_legend_linked_cases.classList.remove("no_legend");
+  };
+  field_legend_recent_cases.classList.add("no_legend");
+  let title_text = document.createElement("b");
+  title_text.setAttribute("id", "recent_cases_title");
+  title_text.innerHTML = "Recent Cases";
+  let icon = document.createElement("img");
+  title_container.classList.add("title_container");
+  icon.src = "../../assets/clock.png";
+  fieldset_form_recent_cases.classList.add("fieldset");
+  title_container.appendChild(icon);
+  title_container.appendChild(title_text);
+  fieldset_form_recent_cases.appendChild(title_container);
+  field_legend_recent_cases.innerHTML = "Recent Cases";
+  fieldset_form_recent_cases.appendChild(field_legend_recent_cases);
+
+  let data_container = document.createElement("div");
+  data_container.classList.add("data_container");
+  // element.appendChild(fieldset_form);
+
+  fieldset_form_recent_cases.appendChild(data_container);
+
   for (var x = 0; x < recentlyVisitedCases.length; x++) {
     let claim_number_obtained = recentlyVisitedCases[x].cases?.claim_number
       ? recentlyVisitedCases[x].cases.claim_number
@@ -303,16 +351,16 @@ function buildCasesSelector(recentlyVisitedCases) {
     my_tb.name = "case_selected_form";
     my_tb.value = case_id_obtained;
     my_tb.id = case_id_obtained;
-    fieldset_form.appendChild(my_tb);
-    fieldset_form.appendChild(my_tb_label);
-    fieldset_form.appendChild(br.cloneNode(true));
+    data_container.appendChild(my_tb);
+    data_container.appendChild(my_tb_label);
+    data_container.appendChild(br.cloneNode(true));
   }
 
   if (typeof element != "undefined" && element != null) {
     document.getElementById("cases-list").innerHTML = "";
-    document.getElementById("cases-list").appendChild(fieldset_form);
+    document.getElementById("cases-list").appendChild(fieldset_form_recent_cases);
   } else {
-    document.getElementById("cases-list").appendChild(fieldset_form);
+    document.getElementById("cases-list").appendChild(fieldset_form_recent_cases);
   }
 }
 

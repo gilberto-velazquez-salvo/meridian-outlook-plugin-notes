@@ -64,10 +64,11 @@ export async function initialSubject() {
   document.getElementById("fsubject").value = item.normalizedSubject;
 }
 
-
 export async function getCaseSelected() {
   console.log("entro a case selected");
   var valorgetCaseSeclected = $("#case-selector").serialize();
+  // console.log(valorgetCaseSeclected);
+  document.getElementById("recent_cases_title").innerHTML = valorgetCaseSeclected.split("=")[1];
   document.getElementById("fcaseid").value = valorgetCaseSeclected.split("=")[1];
   clearCasesLinked();
 }
