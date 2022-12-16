@@ -48,6 +48,7 @@ ul {
   -webkit-flex: 1 0 0;
   flex: 1 0 0;
   padding: 10px 20px;
+  margin-right: 10px;
 }
 
 .ms-welcome__main > h2 {
@@ -125,12 +126,25 @@ label {
   margin: 0.4rem 0;
 }
 
+#final-message-panel {
+  margin-top: 18px;
+  justify-content: center;
+  width: 100%;
+}
 #error-message {
   background-color: tomato;
+  width: 100%;
+  justify-content: center;
+  border-radius: 10px;
+  font-weight: bold;
 }
 
 #success-message {
   background-color: aquamarine;
+  width: 100%;
+  justify-content: center;
+  border-radius: 10px;
+  font-weight: bold;
 }
 
 #cases-list {
@@ -152,14 +166,68 @@ div#cases-linked-panel {
 }
 
 input#fsubject,
-input#fnote,
+input#fnote {
+  width: 90%;
+}
+
 input#crm-user,
 input#crm-pass {
-  width: 90%;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #333;
+  padding: 5px 0;
+  outline: none;
+}
+
+#login-panel .ms-TextField:nth-child(2) {
+  margin-top: 20px;
+}
+
+#login-panel .ms-TextField {
+  position: relative;
+}
+
+#login-panel label {
+  position: absolute;
+  top: -10px;
+  color: #aaa;
+  font-size: 10px;
+}
+
+#login-panel #crmlabel {
+  position: absolute;
+  top: -8px;
+  color: #aaa;
+  font-size: 10px;
+}
+
+#credentials-crm-done {
+  background-color: #1277d2;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 18px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: none;
+  margin-top: 35px;
+}
+
+#credentials-crm-done:hover {
+  background-color: #0a61af;
+}
+
+.btn-disabled {
+  cursor: not-allowed !important;
+  background-color: #a0c9ed !important;
 }
 
 div#login-panel {
   width: 90%;
+  margin-top: 35px;
 }
 
 input#fnote {
@@ -221,8 +289,8 @@ legend {
 .title_container {
   display: flex;
   align-items: center;
-  margin-top: 5px;
-  margin-bottom: 18px;
+  padding-top: 5px;
+  padding-bottom: 18px;
   position: relative;
   /* background-color: red; */
 }
@@ -263,6 +331,7 @@ legend {
   max-height: 220px;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-right: 15px;
 }
 
 .data_container::-webkit-scrollbar {
@@ -300,4 +369,8 @@ legend {
   background-color: #f1f1f1;
   padding: 15px 20px;
   box-sizing: border-box;
+}
+
+#cases-form-panel .fieldset {
+  padding-right: 25px !important;
 }

@@ -78,14 +78,36 @@ function unlockForm(formName) {
 
 function clearMostRecentlyVisited() {
   var ele = document.getElementById("case-selector");
-  for(var i=0;i<ele.length;i++){
+  for (var i = 0; i < ele.length; i++) {
     ele[i].checked = false;
   }
 }
 
 function clearCasesLinked() {
   var ele = document.getElementById("case-linked");
-  for(var i=0;i<ele.length;i++){
+  for (var i = 0; i < ele.length; i++) {
     ele[i].checked = false;
+  }
+}
+
+function loginInputTitle() {
+  if (event.target.value != "") {
+    if (event.target.id == "crm-user") {
+      document.getElementById("crm-user-label").style.display = "block";
+    } else {
+      document.getElementById("crm-pass-label").style.display = "block";
+    }
+  } else {
+    if (event.target.id == "crm-user") {
+      document.getElementById("crm-user-label").style.display = "none";
+    } else {
+      document.getElementById("crm-pass-label").style.display = "none";
+    }
+  }
+
+  if (document.getElementById("crm-user").value != "" && document.getElementById("crm-pass").value != "") {
+    document.getElementById("credentials-crm-done").classList.remove("btn-disabled");
+  } else {
+    document.getElementById("credentials-crm-done").classList.add("btn-disabled");
   }
 }

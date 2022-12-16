@@ -37,35 +37,20 @@
     -->
     <main id="app-body" class="ms-welcome__main" style="display: none">
       <!--<h2 class="ms-font-xl">Please fill the following fields with the information desired, then click <b>Run</b>.</h2>-->
-      <div id="final-message-panel">
-        <label id="error-message"></label>
-        <label id="success-message"></label>
-      </div>
+
       <div id="login-panel">
         <div class="ms-Grid">
           <div class="ms-Grid-row">
             <div class="ms-TextField">
-              <label class="ms-Label">Email Username</label>
-              <input
-                class="ms-TextField-field"
-                id="crm-user"
-                type="text"
-                value=""
-                placeholder="Please enter your email account"
-              />
+              <label id="crm-user-label" style="display: none" class="ms-Label">E-mail</label>
+              <input class="ms-TextField-field" id="crm-user" type="text" value="" placeholder="E-mail" />
             </div>
             <div class="ms-TextField">
-              <label class="ms-Label">Email Password</label>
-              <input
-                class="ms-TextField-field"
-                id="crm-pass"
-                type="password"
-                value=""
-                placeholder="Please enter your password account"
-              />
+              <label id="crm-pass-label" style="display: none" class="ms-Label">Password</label>
+              <input class="ms-TextField-field" id="crm-pass" type="password" value="" placeholder="Password" />
             </div>
-            <button class="ms-Dialog-action ms-Button ms-Button--primary" id="credentials-crm-done">
-              <span class="ms-Button-label">Submit</span>
+            <button id="credentials-crm-done" class="btn-disabled">
+              <span>Sign in</span>
             </button>
           </div>
         </div>
@@ -101,6 +86,7 @@
               min="1"
               max="999999999"
               placeholder="Case ID"
+              onkeypress="caseIdTyped()"
             /><br />
             <!-- <label for="fsubject">Subject:</label> -->
             <input type="text" id="fsubject" name="fsubject" placeholder="Subject" required />
@@ -114,6 +100,15 @@
           <span class="ms-Button-label">Add Note</span>
         </div>
       </div>
+      <div id="final-message-panel">
+        <label id="error-message"></label>
+        <label id="success-message"></label>
+      </div>
     </main>
+
+    <script>
+      document.getElementById("crm-user").addEventListener("input", loginInputTitle);
+      document.getElementById("crm-pass").addEventListener("input", loginInputTitle);
+    </script>
   </body>
 </html>

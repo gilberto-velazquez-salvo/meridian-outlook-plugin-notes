@@ -251,10 +251,13 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
     fieldset_form_linked_cases.classList.remove("arrow");
     field_legend_linked_cases.classList.add("no_legend");
     fieldset_form_recent_cases.classList.add("arrow");
-    field_legend_recent_cases.classList.remove("no_legend");
+    // if (field_legend_linked_cases.innerHTML != "Linked Cases") {
+    field_legend_recent_cases.classList.add("no_legend");
+    // }
   };
   let title_text = document.createElement("b");
   title_text.setAttribute("id", "linked_cases_title");
+  field_legend_linked_cases.setAttribute("id", "linked_cases_legend");
   title_text.innerHTML = "Linked Cases";
   let icon = document.createElement("img");
   field_legend_linked_cases.classList.add("no_legend");
@@ -263,11 +266,15 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
   fieldset_form_linked_cases.classList.add("fieldset");
   title_container.appendChild(icon);
   title_container.appendChild(title_text);
-
-  field_legend_linked_cases.innerHTML = "Linked Cases";
-
   fieldset_form_linked_cases.appendChild(title_container);
+  field_legend_linked_cases.innerHTML = "Linked Cases";
   fieldset_form_linked_cases.appendChild(field_legend_linked_cases);
+
+  let data_container = document.createElement("div");
+  data_container.classList.add("data_container");
+
+  fieldset_form_linked_cases.appendChild(data_container);
+
   if (recentlyVisitedHashCases.length > 0) {
     for (var x = 0; x < recentlyVisitedHashCases.length; x++) {
       let claim_number_obtained = recentlyVisitedHashCases[x].claim_number
@@ -286,16 +293,16 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
       my_tb.name = "case_selected_form";
       my_tb.value = case_id_obtained;
       my_tb.id = case_id_obtained;
-      fieldset_form_linked_cases.appendChild(my_tb);
-      fieldset_form_linked_cases.appendChild(my_tb_label);
-      fieldset_form_linked_cases.appendChild(br.cloneNode(true));
+      data_container.appendChild(my_tb);
+      data_container.appendChild(my_tb_label);
+      data_container.appendChild(br.cloneNode(true));
     }
     fieldset_form_recent_cases.classList.add("arrow");
   } else {
     fieldset_form_recent_cases.classList.add("arrow");
     var my_tb_label = document.createElement("label");
     my_tb_label.innerHTML = " No cases linked to Email thread";
-    fieldset_form_linked_cases.appendChild(my_tb_label);
+    data_container.appendChild(my_tb_label);
   }
   if (typeof element != "undefined" && element != null) {
     document.getElementById("cases-linked-list").innerHTML = "";
@@ -313,11 +320,14 @@ function buildCasesSelector(recentlyVisitedCases) {
     fieldset_form_recent_cases.classList.remove("arrow");
     field_legend_recent_cases.classList.add("no_legend");
     fieldset_form_linked_cases.classList.add("arrow");
-    field_legend_linked_cases.classList.remove("no_legend");
+    // if (field_legend_linked_cases.innerHTML != "Linked Cases") {
+    field_legend_linked_cases.classList.add("no_legend");
+    // }
   };
   field_legend_recent_cases.classList.add("no_legend");
   let title_text = document.createElement("b");
   title_text.setAttribute("id", "recent_cases_title");
+  field_legend_recent_cases.setAttribute("id", "recent_cases_legend");
   title_text.innerHTML = "Recent Cases";
   let icon = document.createElement("img");
   title_container.classList.add("title_container");
@@ -414,4 +424,13 @@ function buildCasesHtml(recentlyVisitedCases) {
 
 function get_copied_text_addin() {
   const range = window.getSelection();
+}
+
+function caseIdTyped() {
+  fieldset_form_linked_cases.classList.add("arrow");
+  fieldset_form_recent_cases.classList.add("arrow");
+  field_legend_linked_cases.classList.add("no_legend");
+  field_legend_recent_cases.classList.add("no_legend");
+  document.getElementById("linked_cases_title").innerHTML = "Linked Cases";
+  document.getElementById("recent_cases_title").innerHTML = "Recent Cases";
 }

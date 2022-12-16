@@ -6,6 +6,7 @@
 /* global document, Office */
 Office.onReady((info) => {
   if (info.host === Office.HostType.Outlook) {
+    console.log("button ", document.getElementById("credentials-crm-done"));
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("submit").onclick = saveNote;
     document.getElementById("credentials-crm-done").onclick = login_user_validation;
@@ -39,6 +40,7 @@ export async function initialLoginExistent() {
 }
 
 export async function login_user_validation() {
+  console.log("login");
   var userTyped = document.getElementById("crm-user").value;
   var passTyped = document.getElementById("crm-pass").value;
   let response = await getToken(userTyped, passTyped);
@@ -69,6 +71,7 @@ export async function getCaseSelected() {
   var valorgetCaseSeclected = $("#case-selector").serialize();
   console.log(valorgetCaseSeclected);
   document.getElementById("linked_cases_title").innerHTML = "Linked Cases";
+  document.getElementById("recent_cases_legend").classList.remove("no_legend");
   document.getElementById("recent_cases_title").innerHTML = valorgetCaseSeclected.split("=")[1];
   document.getElementById("fcaseid").value = valorgetCaseSeclected.split("=")[1];
   clearCasesLinked();
@@ -79,6 +82,7 @@ export async function getLinkedCaseSelected() {
   var valorgetCaseSeclected1 = $("#case-linked").serialize();
   console.log(valorgetCaseSeclected1);
   document.getElementById("recent_cases_title").innerHTML = "Recent Cases";
+  document.getElementById("linked_cases_legend").classList.remove("no_legend");
   document.getElementById("linked_cases_title").innerHTML = valorgetCaseSeclected1.split("=")[1];
   document.getElementById("fcaseid").value = valorgetCaseSeclected1.split("=")[1];
   clearMostRecentlyVisited();
