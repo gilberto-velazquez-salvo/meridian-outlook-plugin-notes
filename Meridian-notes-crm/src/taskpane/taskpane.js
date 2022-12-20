@@ -9,8 +9,6 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("submit").onclick = saveNote;
     document.getElementById("credentials-crm-done").onclick = login_user_validation;
-    document.getElementById("case-selector").onclick = getCaseSelected;
-    document.getElementById("case-linked").onclick = getLinkedCaseSelected;
     initialSubject();
     initialClipboard();
     display_initial_panes();
@@ -62,28 +60,6 @@ export async function initialSubject() {
   const item = Office.context.mailbox.item;
   // Write message property value to the task pane
   document.getElementById("fsubject").value = item.normalizedSubject;
-}
-
-export async function getCaseSelected() {
-  var valorgetCaseSeclected = $("#case-selector").serialize();
-  document.getElementById("linked_cases_title").innerHTML = "Linked Cases";
-  document.getElementById("recent_cases_legend").classList.remove("no_legend");
-  document.getElementById("recent_cases_title").innerHTML = document.getElementById(
-    event.target.id
-  ).nextElementSibling.innerHTML;
-  document.getElementById("fcaseid").value = valorgetCaseSeclected.split("=")[1];
-  clearCasesLinked();
-}
-
-export async function getLinkedCaseSelected() {
-  var valorgetCaseSeclected1 = $("#case-linked").serialize();
-  document.getElementById("recent_cases_title").innerHTML = "Recent Cases";
-  document.getElementById("linked_cases_legend").classList.remove("no_legend");
-  document.getElementById("linked_cases_title").innerHTML = document.getElementById(
-    event.target.id
-  ).nextElementSibling.innerHTML;
-  document.getElementById("fcaseid").value = valorgetCaseSeclected1.split("=")[1];
-  clearMostRecentlyVisited();
 }
 
 export async function run() {

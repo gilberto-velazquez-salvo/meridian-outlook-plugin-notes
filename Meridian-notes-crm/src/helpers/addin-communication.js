@@ -270,7 +270,7 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
   field_legend_linked_cases.innerHTML = "Linked Cases";
   fieldset_form_linked_cases.appendChild(field_legend_linked_cases);
 
-  let data_container = document.createElement("div");
+  let data_container = document.createElement("form");
   data_container.classList.add("data_container");
 
   fieldset_form_linked_cases.appendChild(data_container);
@@ -284,18 +284,22 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
       let claimant_full_name_obtained = recentlyVisitedHashCases[x].claimant_full_name
         ? recentlyVisitedHashCases[x].claimant_full_name
         : "--";
-
+      var input_container = document.createElement("div");
       var my_tb_label = document.createElement("label");
       my_tb_label.setAttribute("for", case_id_obtained);
       my_tb_label.innerHTML = claim_number_obtained + " " + claimant_full_name_obtained;
       var my_tb = document.createElement("input");
+      my_tb.onclick = () => {
+        getLinkedCaseSelected();
+      };
       my_tb.type = "radio";
       my_tb.name = "case_selected_form";
       my_tb.value = case_id_obtained;
       my_tb.id = case_id_obtained;
-      data_container.appendChild(my_tb);
-      data_container.appendChild(my_tb_label);
-      data_container.appendChild(br.cloneNode(true));
+
+      input_container.appendChild(my_tb);
+      input_container.appendChild(my_tb_label);
+      data_container.appendChild(input_container);
     }
     fieldset_form_recent_cases.classList.add("arrow");
   } else {
@@ -339,8 +343,9 @@ function buildCasesSelector(recentlyVisitedCases) {
   field_legend_recent_cases.innerHTML = "Recent Cases";
   fieldset_form_recent_cases.appendChild(field_legend_recent_cases);
 
-  let data_container = document.createElement("div");
+  let data_container = document.createElement("form");
   data_container.classList.add("data_container");
+  data_container.setAttribute("id", "case-selector-form");
   // element.appendChild(fieldset_form);
 
   fieldset_form_recent_cases.appendChild(data_container);
@@ -353,18 +358,23 @@ function buildCasesSelector(recentlyVisitedCases) {
     let claimant_full_name_obtained = recentlyVisitedCases[x].cases?.claimant_full_name
       ? recentlyVisitedCases[x].cases.claimant_full_name
       : "--";
-
+    var input_container = document.createElement("div");
     var my_tb_label = document.createElement("label");
     my_tb_label.setAttribute("for", case_id_obtained);
     my_tb_label.innerHTML = claim_number_obtained + " " + claimant_full_name_obtained;
     var my_tb = document.createElement("input");
+    my_tb.onclick = () => {
+      getCaseSelected();
+    };
     my_tb.type = "radio";
     my_tb.name = "case_selected_form";
     my_tb.value = case_id_obtained;
     my_tb.id = case_id_obtained;
-    data_container.appendChild(my_tb);
-    data_container.appendChild(my_tb_label);
-    data_container.appendChild(br.cloneNode(true));
+    input_container.appendChild(my_tb);
+    input_container.appendChild(my_tb_label);
+    data_container.appendChild(input_container);
+
+    // data_container.appendChild(br.cloneNode(true));
   }
 
   if (typeof element != "undefined" && element != null) {
@@ -372,6 +382,32 @@ function buildCasesSelector(recentlyVisitedCases) {
     document.getElementById("cases-list").appendChild(fieldset_form_recent_cases);
   } else {
     document.getElementById("cases-list").appendChild(fieldset_form_recent_cases);
+  }
+}
+
+function getCaseSelected() {
+  var valorgetCaseSelected = $("#case-selector-form").serialize();
+  if (valorgetCaseSelected) {
+    document.getElementById("linked_cases_title").innerHTML = "Linked Cases";
+    document.getElementById("recent_cases_legend").classList.remove("no_legend");
+    document.getElementById("recent_cases_title").innerHTML = document.getElementById(
+      event.target.id
+    ).nextElementSibling.innerHTML;
+    document.getElementById("fcaseid").value = valorgetCaseSelected.split("=")[1];
+    clearCasesLinked();
+  }
+}
+
+function getLinkedCaseSelected() {
+  var valorgetCaseSelected1 = $("#case-linked").serialize();
+  if (valorgetCaseSelected1) {
+    document.getElementById("recent_cases_title").innerHTML = "Recent Cases";
+    document.getElementById("linked_cases_legend").classList.remove("no_legend");
+    document.getElementById("linked_cases_title").innerHTML = document.getElementById(
+      event.target.id
+    ).nextElementSibling.innerHTML;
+    document.getElementById("fcaseid").value = valorgetCaseSelected1.split("=")[1];
+    clearMostRecentlyVisited();
   }
 }
 

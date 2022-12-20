@@ -284,6 +284,7 @@ legend {
   overflow: hidden;
   width: 0;
   margin-bottom: -10px;
+  display: none;
 }
 
 .title_container {
@@ -313,7 +314,7 @@ legend {
 }
 
 .arrow {
-  height: 38px;
+  height: 15px;
   overflow: hidden;
 }
 
