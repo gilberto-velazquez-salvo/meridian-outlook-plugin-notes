@@ -253,9 +253,9 @@ form#case-selector {
 }
 
 form#case-linked {
-  max-height: 160px;
+  /* max-height: 160px;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: hidden; */
 }
 
 legend {
