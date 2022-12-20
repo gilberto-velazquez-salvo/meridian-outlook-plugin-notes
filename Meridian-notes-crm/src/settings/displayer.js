@@ -77,14 +77,14 @@ function unlockForm(formName) {
 }
 
 function clearMostRecentlyVisited() {
-  var ele = document.getElementById("case-selector");
+  var ele = document.getElementById("case-selector-form");
   for (var i = 0; i < ele.length; i++) {
     ele[i].checked = false;
   }
 }
 
 function clearCasesLinked() {
-  var ele = document.getElementById("case-linked");
+  var ele = document.getElementById("case-linked-form");
   for (var i = 0; i < ele.length; i++) {
     ele[i].checked = false;
   }
