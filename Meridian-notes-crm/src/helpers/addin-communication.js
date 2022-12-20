@@ -272,6 +272,7 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
 
   let data_container = document.createElement("form");
   data_container.classList.add("data_container");
+  data_container.setAttribute("id", "case-linked-form");
 
   fieldset_form_linked_cases.appendChild(data_container);
 
@@ -399,7 +400,7 @@ function getCaseSelected() {
 }
 
 function getLinkedCaseSelected() {
-  var valorgetCaseSelected1 = $("#case-linked").serialize();
+  var valorgetCaseSelected1 = $("#case-linked-form").serialize();
   if (valorgetCaseSelected1) {
     document.getElementById("recent_cases_title").innerHTML = "Recent Cases";
     document.getElementById("linked_cases_legend").classList.remove("no_legend");
