@@ -49,6 +49,7 @@ export async function login_user_validation() {
     display_cases_form();
     setValidConfig(userTyped, passTyped);
     await getEmailLinked(response);
+    // Update info, not exactly as Dashboard
     //await getDashboardInfo(response);
     await getTaskProcessed(response);
   }

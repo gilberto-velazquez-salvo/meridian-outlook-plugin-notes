@@ -25,7 +25,7 @@ async function getDashboardInfo(token) {
     return dataParsed1.data.recently_visited_cases;
     //buildCasesSelector(dataParsed1.data.recently_visited_cases, token);
   } catch (error) {
-    //console.log("Error fetching remote HTML: ", error);
+    console.log("Error fetching remote HTML: ", error);
   }
 }
 
@@ -36,7 +36,7 @@ async function getEmailLinked(token) {
     const dataParsed3 = JSON.parse(email_linked);
     buildCasesHashSelector(dataParsed3.data.details);
   } catch (error) {
-    //console.log("Error fetching remote emails", error);
+    console.log("Error fetching remote emails", error);
   }
 }
 
@@ -82,44 +82,11 @@ async function getTaskProcessed(token, caseId) {
   try {
     var tasksObtained = await getTasksRequest(token, caseId);
     const json_response_tasks = JSON.parse(tasksObtained);
-    //console.log(json_response_tasks);
     buildCasesSelector(json_response_tasks.data);
   } catch (error) {
     console.log(error);
     return null;
   }
-}
-
-function filterTask(tasksReceived) {
-  //console.log("inside filterTask");
-  //console.log(tasksReceived);
-  var dateAndName = tasksReceived.map(function (item) {
-    return {
-      date_obtained: new Date(item.updated_at),
-      expert: item.expert,
-      claimant: item.case.claimant_full_name,
-      case_id: item.case.id,
-    };
-  });
-
-  const minDate = new Date(
-    Math.min(
-      ...dateAndName.map((element) => {
-        return new Date(element.date_obtained);
-      })
-    )
-  );
-
-  var label_builded = {};
-  dateAndName.forEach(function (elem) {
-    if (minDate.toString() == elem.date_obtained.toString()) {
-      label_builded = {
-        case_id: elem.case_id,
-        label_to_show: elem.claimant + " -- " + elem.expert,
-      };
-    }
-  });
-  return label_builded;
 }
 
 function getTasksRequest(token) {
