@@ -9,7 +9,8 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("submit").onclick = saveNote;
     document.getElementById("credentials-crm-done").onclick = login_user_validation;
-    initialSubject();
+    // Request of the client, leave subject line blank by default
+    //initialSubject();
     initialClipboard();
     display_initial_panes();
   }
@@ -48,7 +49,8 @@ export async function login_user_validation() {
     display_cases_form();
     setValidConfig(userTyped, passTyped);
     await getEmailLinked(response);
-    await getDashboardInfo(response);
+    //await getDashboardInfo(response);
+    await getTaskProcessed(response);
   }
 }
 export async function initialClipboard() {
