@@ -1,6 +1,6 @@
 async function recentlyVisitedCases(user, pass) {
   try {
-    var remoteCode = await makeTokenRequest("http://localhost:8000/api/v1/login", user, pass);
+    var remoteCode = await makeTokenRequest("https://stage-api.meridianmedlegal.com/api/v1/login", user, pass);
     const dataParsed = JSON.parse(remoteCode);
     await getDashboardInfo(dataParsed.data.token);
   } catch (error) {
@@ -20,7 +20,7 @@ async function getClipboard() {
 
 async function getDashboardInfo(token) {
   try {
-    var dashboard = await makeDashboardRequest("http://localhost:8000/api/v1/dashboard", token);
+    var dashboard = await makeDashboardRequest("https://stage-api.meridianmedlegal.com/api/v1/dashboard", token);
     const dataParsed1 = JSON.parse(dashboard);
     return dataParsed1.data.recently_visited_cases;
     //buildCasesSelector(dataParsed1.data.recently_visited_cases, token);
@@ -42,7 +42,7 @@ async function getEmailLinked(token) {
 
 async function getToken(user, pass) {
   try {
-    var remoteCode = await makeTokenRequest("http://localhost:8000/api/v1/login", user, pass);
+    var remoteCode = await makeTokenRequest("https://stage-api.meridianmedlegal.com/api/v1/login", user, pass);
     const dataParsed = JSON.parse(remoteCode);
     return dataParsed.data.token;
   } catch (error) {
@@ -52,7 +52,7 @@ async function getToken(user, pass) {
 
 async function saveNoteCRM(user, pass, fcaseidObtained, fsubjectObtained, fnoteObtained) {
   try {
-    var remoteCodeCRM = await makeTokenRequest("http://localhost:8000/api/v1/login", user, pass);
+    var remoteCodeCRM = await makeTokenRequest("https://stage-api.meridianmedlegal.com/api/v1/login", user, pass);
     const dataParsed3 = JSON.parse(remoteCodeCRM);
     var infoFromNotes = await makeStoreRequest(
       dataParsed3.data.token,
@@ -69,7 +69,7 @@ async function saveNoteCRM(user, pass, fcaseidObtained, fsubjectObtained, fnoteO
 
 async function saveEmailChain(user, pass, fcaseidObtained, emailHash) {
   try {
-    var remoteCodeCRM = await makeTokenRequest("http://localhost:8000/api/v1/login", user, pass);
+    var remoteCodeCRM = await makeTokenRequest("https://stage-api.meridianmedlegal.com/api/v1/login", user, pass);
     const dataParsed3 = JSON.parse(remoteCodeCRM);
     var infoFromNotes = await makeEmailHashPersist(dataParsed3.data.token, fcaseidObtained, emailHash);
     const dataParsed4 = JSON.parse(infoFromNotes);
@@ -92,7 +92,7 @@ async function getTaskProcessed(token, caseId) {
 function getTasksRequest(token) {
   return new Promise(function (resolve, reject) {
     let xhr = new XMLHttpRequest();
-    const url_tasks = "http://localhost:8000/api/v1/dashboard/dashboardOutlook";
+    const url_tasks = "https://stage-api.meridianmedlegal.com/api/v1/dashboard/dashboardOutlook";
     xhr.open("GET", url_tasks);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.setRequestHeader("Authorization", "Bearer " + token);
@@ -117,7 +117,7 @@ function getTasksRequest(token) {
 }
 
 function makeEmailHashRequest(token, emailHash) {
-  var url_complete = "http://localhost:8000/api/v1/case/emailcasesconsult";
+  var url_complete = "https://stage-api.meridianmedlegal.com/api/v1/case/emailcasesconsult";
   return new Promise(function (resolve, reject) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url_complete);
@@ -144,7 +144,7 @@ function makeEmailHashRequest(token, emailHash) {
 }
 
 function makeStoreRequest(token, fcaseidObtained, fsubjectObtained, fnoteObtained) {
-  var url_complete = "http://localhost:8000/api/v1/case/" + fcaseidObtained + "/note/store";
+  var url_complete = "https://stage-api.meridianmedlegal.com/api/v1/case/" + fcaseidObtained + "/note/store";
   return new Promise(function (resolve, reject) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url_complete);
@@ -171,7 +171,7 @@ function makeStoreRequest(token, fcaseidObtained, fsubjectObtained, fnoteObtaine
 }
 
 function makeEmailHashPersist(token, fcaseidObtained, emalHashReceived) {
-  var url_complete = "http://localhost:8000/api/v1/case/" + fcaseidObtained + "/note/emailcasespersist";
+  var url_complete = "https://stage-api.meridianmedlegal.com/api/v1/case/" + fcaseidObtained + "/note/emailcasespersist";
   return new Promise(function (resolve, reject) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url_complete);
@@ -354,8 +354,6 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
 }
 
 function buildCasesSelector(recentlyVisitedCases) {
-  console.log('inside buildCasesSelector');
-  console.log(recentlyVisitedCases);
   var element = document.getElementById("cases-list");
   let br = document.createElement("br");
   let title_container = document.createElement("div");
@@ -390,14 +388,9 @@ function buildCasesSelector(recentlyVisitedCases) {
   fieldset_form_recent_cases.appendChild(data_container);
 
   for (var x = 0; x < recentlyVisitedCases.length; x++) {
-    console.log('nside for');    
     let case_id_obtained = recentlyVisitedCases[x].case_id ? recentlyVisitedCases[x].case_id : "--";
     let expert_obtained=recentlyVisitedCases[x].expert ? recentlyVisitedCases[x].expert : "--";
     let claimant_full_name_obtained = recentlyVisitedCases[x].claimant ? recentlyVisitedCases[x].claimant : "--";
-    console.log('case_id_obtained for: ', case_id_obtained);
-    console.log('expert_obtained',expert_obtained);
-    console.log('claimant_full_name_obtained',claimant_full_name_obtained);
-
     var input_container = document.createElement("div");
     var my_tb_label = document.createElement("label");
     my_tb_label.setAttribute("for", case_id_obtained);

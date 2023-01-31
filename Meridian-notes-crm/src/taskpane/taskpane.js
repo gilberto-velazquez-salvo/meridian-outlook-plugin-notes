@@ -10,7 +10,7 @@ Office.onReady((info) => {
     document.getElementById("submit").onclick = saveNote;
     document.getElementById("credentials-crm-done").onclick = login_user_validation;
     // Request of the client, leave subject line blank by default
-    //initialSubject();
+    initialSubject();
     initialClipboard();
     display_initial_panes();
   }
@@ -61,6 +61,7 @@ export async function initialClipboard() {
 export async function initialSubject() {
   // Get a reference to the current message
   const item = Office.context.mailbox.item;
+  console.log(item);
   // Write message property value to the task pane
   document.getElementById("fsubject").value = item.normalizedSubject;
 }
