@@ -318,13 +318,12 @@ function buildCasesHashSelector(recentlyVisitedHashCases) {
         ? recentlyVisitedHashCases[x].claim_number
         : "--";
       let case_id_obtained = recentlyVisitedHashCases[x].case_id ? recentlyVisitedHashCases[x].case_id : "--";
-      let claimant_full_name_obtained = recentlyVisitedHashCases[x].claimant_full_name
-        ? recentlyVisitedHashCases[x].claimant_full_name
-        : "--";
+      let expert_obtained=recentlyVisitedHashCases[x].expert ? recentlyVisitedHashCases[x].expert : "--";
+      let claimant_full_name_obtained = recentlyVisitedHashCases[x].claimant ? recentlyVisitedHashCases[x].claimant : "--";
       var input_container = document.createElement("div");
       var my_tb_label = document.createElement("label");
       my_tb_label.setAttribute("for", case_id_obtained);
-      my_tb_label.innerHTML = claim_number_obtained + " " + claimant_full_name_obtained;
+      my_tb_label.innerHTML = claimant_full_name_obtained + "," + expert_obtained;
       var my_tb = document.createElement("input");
       my_tb.onclick = () => {
         getLinkedCaseSelected();
