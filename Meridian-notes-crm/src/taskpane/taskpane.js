@@ -10,7 +10,7 @@ Office.onReady((info) => {
     document.getElementById("submit").onclick = saveNote;
     document.getElementById("credentials-crm-done").onclick = login_user_validation;
     // Request of the client, leave subject line blank by default
-    initialSubject();
+    //initialSubject();
     initialClipboard();
     display_initial_panes();
   }
@@ -43,6 +43,7 @@ export async function login_user_validation() {
   let response = await getToken(userTyped, passTyped);
   if (response === null) {
     display_error("The user and password provided are not valid");
+    setValidConfig(null, null);
   } else {
     clean_up_error();
     hide_login_panel();
